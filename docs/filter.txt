@@ -1,0 +1,10 @@
+pymc3
+dask
+scikit-learn
+matplotlib
+seaborn
+jupyterlab
+pytest
+coverage
+pylint
+pytest-cov
