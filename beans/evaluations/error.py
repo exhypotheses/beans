@@ -124,7 +124,7 @@ class Error:
             tn = self.true_negative(threshold=threshold)
             fp = self.false_positive(threshold=threshold)
             fn = self.false_negative(threshold=threshold)
-            frame = self.frame(elements=(tp,tn,fp,fn))
+            frame = self.frame(elements=(tp, tn, fp, fn))
             computations.append(frame)
 
         dask.visualize(computations, filename='error', format='pdf')

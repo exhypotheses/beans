@@ -10,7 +10,7 @@ class Odds:
 
     def __init__(self):
         """
-
+        Constructor
         """
 
         self.relational = beans.graphics.relational.Relational()
