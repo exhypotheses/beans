@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import collections
 import sklearn.preprocessing
 
 
@@ -14,18 +15,18 @@ class Encode:
         """
 
     @staticmethod
-    def bits(frame: pd.DataFrame, field_of_labels: str, unique_labels: np.ndarray) -> pd.DataFrame:
+    def bits(frame: pd.DataFrame, categories: collections.namedtuple) -> pd.DataFrame:
         """
         For One Hot Encoding
 
         :param frame: A DataFrame of data
-        :param field_of_labels: The field that would be transformed into a one-hot format
-        :param unique_labels: The unique values of the 'field_of_labels'
+        :param categories: A collection consisting of 2 items.  Item 1 -> categorical fields, Item 2 -> The unique
+                                      values of each field
         :return:
         """
 
-        enc = sklearn.preprocessing.OneHotEncoder(categories=unique_labels, sparse=False, dtype=np.int)
-        bits_ = enc.fit_transform(X=frame[[field_of_labels]])
+        enc = sklearn.preprocessing.OneHotEncoder(categories=categories.arrays, sparse=False, dtype=np.int)
+        bits_ = enc.fit_transform(X=frame[[categories.fields]])
 
         columns = [column[(column.rindex('_') + 1):] for column in enc.get_feature_names()]
         return pd.DataFrame(data=bits_, columns=columns)
