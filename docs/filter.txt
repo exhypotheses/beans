@@ -1,6 +1,7 @@
 pymc3
 dask
 scikit-learn
+imbalanced-learn
 matplotlib
 seaborn
 jupyterlab
