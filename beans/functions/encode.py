@@ -25,7 +25,7 @@ class Encode:
         """
 
         enc = sklearn.preprocessing.OneHotEncoder(categories=unique_labels, sparse=False, dtype=np.int)
-        bits_ = enc.fit_transform(X=frame[list(field_of_labels)])
+        bits_ = enc.fit_transform(X=frame[[field_of_labels]])
 
         columns = [column[(column.rindex('_') + 1):] for column in enc.get_feature_names()]
         return pd.DataFrame(data=bits_, columns=columns)
