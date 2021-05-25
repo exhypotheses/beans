@@ -11,28 +11,27 @@ class Modelling:
         Constructor
         """
 
-        self.field_of_labels = 'class'
+        self.target = 'class'
         self.labels = ['BARBUNYA', 'BOMBAY', 'CALI', 'DERMASON', 'HOROZ', 'SEKER', 'SIRA']
 
     @staticmethod
     def attributes():
 
         InstancesAttributes = collections.namedtuple(
-            typename='InstancesAttributes', field_names=['url', 'usecols', 'dtype', 'field_of_labels'])
+            typename='InstancesAttributes', field_names=['url', 'usecols', 'dtype', 'target'])
 
-        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/data/beans.csv'
+        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/modelling.csv'
 
-        usecols = ['Area', 'Perimeter', 'MajorAxisLength', 'MinorAxisLength', 'AspectRation', 'Eccentricity', 'ConvexArea', 'EquivDiameter',
-                   'Extent', 'Solidity', 'roundness', 'Compactness', 'ShapeFactor1', 'ShapeFactor2', 'ShapeFactor3', 'ShapeFactor4', 'Class']
+        usecols = ['area', 'perimeter', 'majoraxislength', 'minoraxislength', 'aspectratio', 'eccentricity', 'convexarea',
+                   'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1', 'shapefactor2', 'shapefactor3',
+                   'shapefactor4', 'class']
 
-        dtype = {'Area': np.int, 'Perimeter': np.float, 'MajorAxisLength': np.float, 'MinorAxisLength': np.float, 'AspectRation': np.float,
-                 'Eccentricity': np.float, 'ConvexArea': np.int, 'EquivDiameter': np.float, 'Extent': np.float, 'Solidity': np.float,
-                 'roundness': np.float, 'Compactness': np.float, 'ShapeFactor1': np.float, 'ShapeFactor2': np.float, 'ShapeFactor3': np.float,
-                 'ShapeFactor4': np.float, 'Class': str}
+        dtype = {'area': np.int, 'perimeter': np.float, 'majoraxislength': np.float, 'minoraxislength': np.float, 'aspectratio': np.float,
+                 'eccentricity': np.float, 'convexarea': np.int, 'equivdiameter': np.float, 'extent': np.float, 'solidity': np.float,
+                 'roundness': np.float, 'compactness': np.float, 'shapefactor1': np.float, 'shapefactor2': np.float, 'shapefactor3': np.float,
+                 'shapefactor4': np.float, 'class': str}
 
-        field_of_labels = 'Class'
-
-        return InstancesAttributes._make((url, usecols, dtype, field_of_labels))
+        return InstancesAttributes._make((url, usecols, dtype, self.target))
 
     def data(self):
 
@@ -42,7 +41,5 @@ class Modelling:
             data_ = pd.read_csv(filepath_or_buffer=attributes.url, header=0, usecols=attributes.usecols, dtype=attributes.dtype, encoding='utf-8')
         except OSError as err:
             raise Exception(err.strerror) in err
-
-        data_.rename(str.lower, axis=1, inplace=True)
 
         return data_
