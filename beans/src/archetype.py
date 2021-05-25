@@ -14,7 +14,7 @@ class Archetype:
         The develop's copy of this original zip file
             https://github.com/exhypotheses/beans/raw/develop/data/beans.zip
         """
-        
+
     @staticmethod
     def attributes():
         """
