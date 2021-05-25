@@ -14,8 +14,7 @@ class Modelling:
         self.target = 'class'
         self.labels = ['BARBUNYA', 'BOMBAY', 'CALI', 'DERMASON', 'HOROZ', 'SEKER', 'SIRA']
 
-    @staticmethod
-    def attributes():
+    def attributes(self):
 
         InstancesAttributes = collections.namedtuple(
             typename='InstancesAttributes', field_names=['url', 'usecols', 'dtype', 'target'])
