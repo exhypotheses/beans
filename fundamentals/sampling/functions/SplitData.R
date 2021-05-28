@@ -50,7 +50,7 @@ SplitData <- function(x, training_fraction, initial_fraction){
   training <- x[i,]
   testing <- x[-i,]
   
-  return (list('training' <- training, 'testing' <-testing))
+  return (list('training' = training, 'testing' = testing))
   
   
 }
