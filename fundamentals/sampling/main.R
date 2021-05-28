@@ -28,7 +28,7 @@ base::set.seed(seed = seed)
 
 # Hence
 training_fraction <- 0.6
-initial_fraction <-0.35
+initial_fraction <-0.65
 
 
 # The distinct classes of the data set
@@ -41,16 +41,25 @@ T = data.table()
 
 for (label in labels) {
   
+  print(label)
+  
   # The members of <label>
   excerpt <- beans[label, on=.(class)]
+  x <- excerpt[, .SD, .SDcols = !'class']
   
   # Split the data into training & testing sets
-  splits <- SplitData(x = excerpt, training_fraction = training_fraction, 
+  splits <- SplitData(x = x, training_fraction = training_fraction, 
                       initial_fraction = initial_fraction)
   
   # Finally
-  X <- base::rbind(X, splits$training)
-  T <- base::rbind(T, splits$testing)
+  train_ <- data.table::copy(splits$training)
+  train_[, class:=label]
+  
+  test_ <- data.table::copy(splits$testing)
+  test_[, class:=label]
+  
+  X <- base::rbind(X, train_)
+  T <- base::rbind(T, test_)
   
 }
 
