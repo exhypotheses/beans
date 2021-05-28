@@ -1,4 +1,3 @@
-
 # Functions
 source("functions/ImportPackages.R")
 source("functions/SplitData.R")
@@ -59,8 +58,4 @@ for (label in labels) {
 # Save
 data.table::fwrite(x = X, file = 'training.csv', row.names = FALSE, col.names = TRUE)
 data.table::fwrite(x = T, file = 'testing.csv', row.names = FALSE, col.names = TRUE)
-
-
-
-
 
