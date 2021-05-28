@@ -1,17 +1,11 @@
-# Thus far
-#   - mathematics
-# Next
-#   - continue splitting
-
-setwd()
-
 
 # Functions
-source("packages.R")
+source("functions/ImportPackages.R")
+source("functions/SplitData.R")
 
 
 # Ensure that the required packages are available
-packages()
+ImportPackages()
 
 
 # Libraries
@@ -25,6 +19,7 @@ dataurl <- 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehou
 beans <- data.table::fread(dataurl, header = TRUE, encoding = "UTF-8", 
                            data.table = TRUE, colClasses = c(class = "factor"))
 str(beans)
+frequencies <- beans[, .N, by=class]
 
 
 # Random States
@@ -32,67 +27,38 @@ seed <- 5
 base::set.seed(seed = seed)
 
 
-# Frequencies
-frequencies <- beans[, .N, by=class]
+# Hence
+training_fraction <- 0.6
+initial_fraction <-0.35
+
+
+# The distinct classes of the data set
+labels <- unique(beans$class)
 
 
 # Hence
-training_fraction <- 0.6
-start_fraction <-0.25
-
-labels <- unique(beans$class)
-
 X = data.table()
 T = data.table()
 
 for (label in labels) {
   
-  
   # The members of <label>
   excerpt <- beans[label, on=.(class)]
   
-  
-  # The number of <label> instances
-  N <- dim(excerpt)[1]
-  
-  
-  # Therefore, the number of training instances will be
-  n_training_points <- base::floor(training_fraction * N)
-  
-  
-  # The initial number of spider points
-  n_start_points <- base::floor(start_fraction * n_training_points)
-  
-  # A random selection of <n_start_points> spider points
-  start_indices <- base::sample(x = 1:N, size = n_start_points)
-  
-  # The remaining points, which are the points the spiders can acquire
-  nest <- excerpt[-start_indices,]
-  acquisitors <- excerpt[start_indices,]
-  
-  selections <- caret::maxDissim(a = acquisitors, b = nest, 
-                                 n = (n_training_points - n_start_points), obj = caret::minDiss())
-  
-  indices <- base::unique(c(selections, start_indices))
-  left <- n_training_points - base::length(indices)
-  outliers <- base::setdiff(1:N, indices)
-  leftpoints <- base::sample(x = outliers, size = left, replace = FALSE)
-  
-  
-  # The training & testing sets
-  indices_ <- c(indices, leftpoints)
-  training <- excerpt[indices_,]
-  testing <- excerpt[-indices_,]
-  
+  # Split the data into training & testing sets
+  splits <- SplitData(x = excerpt, training_fraction = training_fraction, 
+                      initial_fraction = initial_fraction)
   
   # Finally
-  X <- base::rbind(X, training)
-  T <- base::rbind(T, testing)
+  X <- base::rbind(X, splits$training)
+  T <- base::rbind(T, splits$testing)
   
 }
 
 
-
+# Save
+data.table::fwrite(x = X, file = 'training.csv', row.names = FALSE, col.names = TRUE)
+data.table::fwrite(x = T, file = 'testing.csv', row.names = FALSE, col.names = TRUE)
 
 
 
