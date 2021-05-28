@@ -37,17 +37,20 @@ split <- function(x, training_fraction, initial_fraction){
   selections <- caret::maxDissim(a = base, b = pool, 
                                  n = (n_training_points - n_initial_points), obj = caret::minDiss())
   
-  
+  # Each <base> point acquires a unique set of points from <pool>, but the 
+  # intersection of <base> points acquisitions is not an empty set
   indices <- base::unique(c(selections, start_indices))
-  left <- n_training_points - base::length(indices)
-  outliers <- base::setdiff(1:N, indices)
-  leftpoints <- base::sample(x = outliers, size = left, replace = FALSE)
+  n_short <- n_training_points - base::length(indices)
+  unselected <- base::setdiff(reference, indices)
+  remaining <- base::sample(x = unselected, size = n_short, replace = FALSE)
   
   
   # The training & testing sets
-  indices_ <- c(indices, leftpoints)
-  training <- x[indices_,]
-  testing <- x[-indices_,]
+  i <- c(indices, remaining)
+  training <- x[i,]
+  testing <- x[-i,]
+  
+  return list('training' <- training, 'testing' <-testing)
   
   
 }
