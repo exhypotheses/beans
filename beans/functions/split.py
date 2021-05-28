@@ -15,19 +15,19 @@ class Split:
 
         self.splitting = splitting
 
-    def exc(self, data: pd.DataFrame, labels: list, strata: list) -> \
+    def exc(self, data: pd.DataFrame, target: list, strata: list) -> \
             (pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame):
         """
 
         :param data:
-        :param labels:
+        :param target:
         :param strata:
         :return:
         """
 
         x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(
-            data.drop(columns=labels),
-            data[labels],
+            data.drop(columns=target),
+            data[target],
             test_size=self.splitting.test_size,
             random_state=self.splitting.random_state,
             stratify=data[strata])
