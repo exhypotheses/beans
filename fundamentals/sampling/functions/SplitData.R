@@ -35,7 +35,7 @@ SplitData <- function(x, training_fraction, initial_fraction){
   
   #Selecting ...
   selections <- caret::maxDissim(a = base, b = pool, 
-                                 n = (n_training_points - n_initial_points), obj = caret::minDiss())
+                                 n = (n_training_points - n_initial_points))
   
   # Each <base> point acquires a unique set of points from <pool>, but the 
   # intersection of <base> points acquisitions is not an empty set
