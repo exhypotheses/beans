@@ -1,4 +1,5 @@
 pymc3
+theano
 dask
 scikit-learn
 imbalanced-learn
