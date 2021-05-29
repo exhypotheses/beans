@@ -3,7 +3,7 @@ import numpy as np
 import sklearn.decomposition
 
 
-class Projectors:
+class Project:
 
     def __init__(self):
         """
@@ -22,7 +22,7 @@ class Projectors:
         return projector.transform(X=matrix)
 
     @staticmethod
-    def determine(matrix: np.ndarray) -> sklearn.decomposition.KernelPCA:
+    def exc(matrix: np.ndarray) -> sklearn.decomposition.KernelPCA:
         """
 
         :param matrix:
