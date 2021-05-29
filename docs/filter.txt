@@ -6,6 +6,7 @@ imbalanced-learn
 matplotlib
 seaborn
 jupyterlab
+yellowbrick
 pytest
 coverage
 pylint
