@@ -3,7 +3,7 @@ import pandas as pd
 import sklearn.preprocessing
 
 
-class Scalers:
+class Scale:
 
     def __init__(self):
         """
@@ -27,7 +27,7 @@ class Scalers:
         return pd.DataFrame(data=scaled_, columns=blob.columns)
 
     @staticmethod
-    def determine(blob: pd.DataFrame) -> sklearn.preprocessing.StandardScaler:
+    def exc(blob: pd.DataFrame) -> sklearn.preprocessing.StandardScaler:
         """
         
         :param blob: A frame of numeric fields
