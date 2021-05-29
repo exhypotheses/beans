@@ -32,6 +32,18 @@ class Modelling:
 
         return InstancesAttributes._make((url, usecols, dtype, self.target))
 
+    def __weights(self, blob: pd.DataFrame):
+        """
+
+        :param blob:
+        :return:
+        """
+
+        weight_values = sklearn.utils.class_weight.compute_class_weight(
+            class_weight='balanced', classes=self.labels, y=blob[self.target])
+
+        return dict(zip(labels, weight_values))
+
     def data(self):
 
         attributes = self.attributes()
@@ -41,4 +53,6 @@ class Modelling:
         except OSError as err:
             raise Exception(err.strerror) in err
 
-        return data_
+        weights_ = self.__weights(blob=data_)
+
+        return data_, weights_
