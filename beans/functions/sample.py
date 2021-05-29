@@ -17,7 +17,7 @@ class Sample:
     def exc(self, blob: pd.DataFrame, target: str):
         """
 
-        :param blob: The data set thatwill be sampled
+        :param blob: The data set that will be sampled
         :param target: The labels field
         :return:
         """
