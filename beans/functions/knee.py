@@ -34,5 +34,5 @@ class Knee:
         ybc = yellowbrick.cluster.KElbowVisualizer(estimator=kmc, k=(3, 16), metric='distortion', timings=False, ax=ax)
         ybc.fit(X=blob.drop(columns=target))
         ax.figure.clf()
-        
+
         return ybc.elbow_value_
