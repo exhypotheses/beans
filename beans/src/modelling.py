@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import collections
 
+import sklearn.utils
+
 
 # noinspection PyUnresolvedReferences,PyProtectedMember
 class Modelling:
@@ -21,13 +23,18 @@ class Modelling:
 
         url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/modelling.csv'
 
-        usecols = ['area', 'perimeter', 'majoraxislength', 'minoraxislength', 'aspectratio', 'eccentricity', 'convexarea',
-                   'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1', 'shapefactor2', 'shapefactor3',
+        usecols = ['area', 'perimeter', 'majoraxislength', 'minoraxislength', 'aspectratio', 'eccentricity',
+                   'convexarea',
+                   'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1', 'shapefactor2',
+                   'shapefactor3',
                    'shapefactor4', 'class']
 
-        dtype = {'area': np.int, 'perimeter': np.float, 'majoraxislength': np.float, 'minoraxislength': np.float, 'aspectratio': np.float,
-                 'eccentricity': np.float, 'convexarea': np.int, 'equivdiameter': np.float, 'extent': np.float, 'solidity': np.float,
-                 'roundness': np.float, 'compactness': np.float, 'shapefactor1': np.float, 'shapefactor2': np.float, 'shapefactor3': np.float,
+        dtype = {'area': np.int, 'perimeter': np.float, 'majoraxislength': np.float, 'minoraxislength': np.float,
+                 'aspectratio': np.float,
+                 'eccentricity': np.float, 'convexarea': np.int, 'equivdiameter': np.float, 'extent': np.float,
+                 'solidity': np.float,
+                 'roundness': np.float, 'compactness': np.float, 'shapefactor1': np.float, 'shapefactor2': np.float,
+                 'shapefactor3': np.float,
                  'shapefactor4': np.float, 'class': str}
 
         return InstancesAttributes._make((url, usecols, dtype, self.target))
@@ -53,7 +60,8 @@ class Modelling:
         attributes = self.attributes()
 
         try:
-            data_ = pd.read_csv(filepath_or_buffer=attributes.url, header=0, usecols=attributes.usecols, dtype=attributes.dtype, encoding='utf-8')
+            data_ = pd.read_csv(filepath_or_buffer=attributes.url, header=0, usecols=attributes.usecols,
+                                dtype=attributes.dtype, encoding='utf-8')
         except OSError as err:
             raise Exception(err.strerror) in err
 
