@@ -20,9 +20,9 @@ class Project:
     def apply(matrix: np.ndarray, vector: pd.Series, projector: sklearn.decomposition.KernelPCA) -> pd.DataFrame:
         """
 
-        :param matrix:
-        :param vector:
-        :param projector:
+        :param matrix: The independent variables matrix
+        :param vector:  The dependent variable vector
+        :param projector: A transformer
         :return:
         """
 
