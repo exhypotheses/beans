@@ -49,7 +49,7 @@ class Modelling:
         weight_values = sklearn.utils.class_weight.compute_class_weight(
             class_weight='balanced', classes=self.labels, y=blob[self.target])
 
-        return dict(zip(labels, weight_values))
+        return dict(zip(self.labels, weight_values))
 
     def data(self):
         """
