@@ -5,7 +5,7 @@ import sklearn.model_selection
 
 
 class Split:
-    
+
     def __init__(self, splitting: collections.namedtuple):
         """
 
@@ -15,8 +15,7 @@ class Split:
 
         self.splitting = splitting
 
-    def exc(self, data: pd.DataFrame, target: list, strata: list) -> \
-            (pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame):
+    def exc(self, data: pd.DataFrame, target: list, strata: list) -> (pd.DataFrame, pd.DataFrame):
         """
 
         :param data:
@@ -32,4 +31,9 @@ class Split:
             random_state=self.splitting.random_state,
             stratify=data[strata])
 
-        return x_train, x_test, y_train, y_test
+        training = pd.concat((x_train.reset_index(drop=True), y_train.reset_index(drop=True)), axis=1,
+                             ignore_index=False)
+        testing = pd.concat((x_test.reset_index(drop=True), y_test.reset_index(drop=True)), axis=1,
+                            ignore_index=False)
+
+        return training, testing

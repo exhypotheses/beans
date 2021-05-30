@@ -1,10 +1,12 @@
 pymc3
+theano
 dask
 scikit-learn
 imbalanced-learn
 matplotlib
 seaborn
 jupyterlab
+yellowbrick
 pytest
 coverage
 pylint

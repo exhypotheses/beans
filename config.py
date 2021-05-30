@@ -15,3 +15,5 @@ class Config:
                         'compactness', 'shapefactor1', 'shapefactor2', 'shapefactor3', 'shapefactor4', 'class']
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
+
+        self.SEED = 5
