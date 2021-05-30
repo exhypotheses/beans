@@ -45,6 +45,10 @@ class Modelling:
         return dict(zip(labels, weight_values))
 
     def data(self):
+        """
+
+        :return: The data set, data weights w.r.t. instances per label
+        """
 
         attributes = self.attributes()
 
