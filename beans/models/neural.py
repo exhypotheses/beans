@@ -15,7 +15,7 @@ class Neural:
         configurations = config.Config()
         self.rng = np.random.default_rng(seed=configurations.SEED)
 
-    def exc(self, input: theano, output: theano):
+    def exc(self, input: np.ndarray, output: np.ndarray):
         """
 
         :param input:  The input tensor, including the bias cells
