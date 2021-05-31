@@ -14,28 +14,24 @@ class Modelling:
         """
 
         self.target = 'class'
-        self.labels = ['BARBUNYA', 'BOMBAY', 'CALI', 'DERMASON', 'HOROZ', 'SEKER', 'SIRA']
+        self.labels = ['BOMBAY', 'DERMASON', 'SEKER']
 
     def attributes(self):
 
         InstancesAttributes = collections.namedtuple(
             typename='InstancesAttributes', field_names=['url', 'usecols', 'dtype', 'target'])
 
-        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/modelling.csv'
+        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/excerpt.csv'
 
         usecols = ['area', 'perimeter', 'majoraxislength', 'minoraxislength', 'aspectratio', 'eccentricity',
-                   'convexarea',
-                   'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1', 'shapefactor2',
-                   'shapefactor3',
-                   'shapefactor4', 'class']
+                   'convexarea', 'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1',
+                   'shapefactor2', 'shapefactor3', 'shapefactor4', 'class']
 
         dtype = {'area': np.int, 'perimeter': np.float, 'majoraxislength': np.float, 'minoraxislength': np.float,
-                 'aspectratio': np.float,
-                 'eccentricity': np.float, 'convexarea': np.int, 'equivdiameter': np.float, 'extent': np.float,
-                 'solidity': np.float,
-                 'roundness': np.float, 'compactness': np.float, 'shapefactor1': np.float, 'shapefactor2': np.float,
-                 'shapefactor3': np.float,
-                 'shapefactor4': np.float, 'class': str}
+                 'aspectratio': np.float, 'eccentricity': np.float, 'convexarea': np.int, 'equivdiameter': np.float,
+                 'extent': np.float, 'solidity': np.float, 'roundness': np.float, 'compactness': np.float,
+                 'shapefactor1': np.float, 'shapefactor2': np.float, 'shapefactor3': np.float, 'shapefactor4': np.float,
+                 'class': str}
 
         return InstancesAttributes._make((url, usecols, dtype, self.target))
 
