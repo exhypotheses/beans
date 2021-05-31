@@ -12,7 +12,7 @@ class Set:
         """
 
         self.target = 'class'
-        self.labels = ['BARBUNYA', 'BOMBAY', 'CALI', 'DERMASON', 'HOROZ', 'SEKER', 'SIRA']
+        self.labels = ['BOMBAY', 'DERMASON', 'SEKER']
 
     def attributes(self):
         """
@@ -23,8 +23,8 @@ class Set:
         InstancesAttributes = collections.namedtuple(
             typename='InstancesAttributes', field_names=['url_training', 'url_testing', 'usecols', 'dtype', 'target'])
 
-        url_training = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/splits/training.csv'
-        url_testing = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/splits/testing.csv'
+        url_training = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/splits/excerpt/training.csv'
+        url_testing = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/splits/excerpt/testing.csv'
 
         usecols = ['area', 'perimeter', 'majoraxislength', 'minoraxislength', 'aspectratio', 'eccentricity',
                    'convexarea', 'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1',
