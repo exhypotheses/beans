@@ -66,7 +66,7 @@ And
     matrix = training_scaled.drop(columns=self.target).to_numpy()
     projector = project.exc(matrix=matrix, n_components=n_components)
     training_projected = project.apply(matrix=matrix, vector=training_scaled[self.target], 
-                                                          projector=projector)
+                                             projector=projector)
   
     return training_projected, projector
 ```
