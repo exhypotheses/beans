@@ -38,12 +38,13 @@ whereby filter.txt does not include `python-graphviz`, `pywin32`, `nodejs`.  And
 
 ### Modelling Notes
 
+<br>
+
 **Projecting the indepent variables**
 
-**Foremost**, how many principal components might be effective?  A rough estimate can be determined via the elbow method, whilst being aware of the method's limitations.  Study
+Foremost, how many principal components might be effective?  A rough estimate can be determined via the elbow method, whilst being aware of the method's limitations.  Study
 
 * [Estimating the number of clusters in a data set via the gap statistic](https://statweb.stanford.edu/~gwalther/gap)
-
 * [The Application of Cluster Analysis in Strategic Management Research: An Analysis and Critique](https://www.jstor.org/stable/2486927?seq=1)
 
 And
@@ -64,7 +65,8 @@ And
     project = beans.functions.project.Project()
     matrix = training_scaled.drop(columns=self.target).to_numpy()
     projector = project.exc(matrix=matrix, n_components=n_components)
-    training_projected = project.apply(matrix=matrix, vector=training_scaled[self.target], projector=projector)
+    training_projected = project.apply(matrix=matrix, vector=training_scaled[self.target], 
+                                                          projector=projector)
   
     return training_projected, projector
 ```
