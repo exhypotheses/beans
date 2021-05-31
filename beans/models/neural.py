@@ -30,8 +30,8 @@ class Neural:
             """
 
             # Architecture
-            hidden_1 = 7
-            hidden_2 = 7
+            hidden_1 = 12
+            hidden_2 = 8
 
             init_1 = self.rng.standard_normal(size=(input.shape[1], hidden_1)).astype(theano.config.floatX)
             init_2 = self.rng.standard_normal(size=(hidden_1, hidden_2)).astype(theano.config.floatX)
