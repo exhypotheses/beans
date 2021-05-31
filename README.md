@@ -7,6 +7,7 @@ References:
   Volume 174, 2020, 105507_, [DOI](https://doi.org/10.1016/j.compag.2020.105507)
 
 <br>
+<br>
 
 ### Development Notes
 
@@ -34,3 +35,41 @@ whereby filter.txt does not include `python-graphviz`, `pywin32`, `nodejs`.  And
 
 <br>
 <br>
+
+### Modelling Notes
+
+**Projecting the indepent variables**
+
+**Foremost**, how many principal components might be effective?  A rough estimate can be determined via the elbow method, whilst being aware of the method's limitations.  Study
+
+* [Estimating the number of clusters in a data set via the gap statistic](https://statweb.stanford.edu/~gwalther/gap)
+
+* [The Application of Cluster Analysis in Strategic Management Research: An Analysis and Critique](https://www.jstor.org/stable/2486927?seq=1)
+
+And
+
+* Always add the 'kpca' projector object to the preprocessing pickle; if a projection step is included in the modelling process.
+
+```
+  def project_(self, training_scaled: pd.DataFrame):
+    """
+  
+    :param training_scaled:  The data that will be projected
+    :return:
+    """
+  
+    knee = beans.functions.knee.Knee()
+    n_components = knee.exc(blob=training_scaled, target=self.target)
+  
+    project = beans.functions.project.Project()
+    matrix = training_scaled.drop(columns=self.target).to_numpy()
+    projector = project.exc(matrix=matrix, n_components=n_components)
+    training_projected = project.apply(matrix=matrix, vector=training_scaled[self.target], projector=projector)
+  
+    return training_projected, projector
+```
+
+```
+  logger.warning('The # of Kernel Principal Components of interest will be {}'.format(n_components))
+  logger.warning(training_projected.info())
+```
