@@ -14,7 +14,8 @@ library(proxy)
 
 
 # Data
-dataurl <- 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/modelling.csv'
+basename = 'excerpt'
+dataurl <- sprintf('https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/%s.csv', basename)
 beans <- data.table::fread(dataurl, header = TRUE, encoding = "UTF-8", 
                            data.table = TRUE, colClasses = c(class = "factor"))
 str(beans)
@@ -65,8 +66,8 @@ for (label in labels) {
 
 
 # Save
-data.table::fwrite(x = X, file = '../../warehouse/splits/training.csv', 
+data.table::fwrite(x = X, file = sprintf('../../warehouse/splits/%s/training.csv', basename), 
                    row.names = FALSE, col.names = TRUE)
-data.table::fwrite(x = T, file = '../../warehouse/splits/testing.csv', 
+data.table::fwrite(x = T, file = sprintf('../../warehouse/splits/%s/testing.csv', basename), 
                    row.names = FALSE, col.names = TRUE)
 
