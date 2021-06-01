@@ -2,6 +2,8 @@ import pymc3
 import numpy as np
 import theano
 
+import pymc3.theanof
+
 import config
 
 
@@ -9,16 +11,34 @@ class Neural:
 
     def __init__(self):
         """
+        Constructor
 
+        Options:
+            * pymc3.theanof.set_tt_rng(pymc3.theanof.MRG_RandomStreams(seed=configurations.SEED))
         """
 
         configurations = config.Config()
         self.rng = np.random.default_rng(seed=configurations.SEED)
 
-    def exc(self, input: np.ndarray, output: np.ndarray):
+    @staticmethod
+    def inference_(model: pymc3.Model, n_iterations: int):
         """
 
-        :param input:  The input tensor, including the bias cells
+        :param model:
+        :param n_iterations:
+        :return:
+        """
+
+        with model:
+            inference = pymc3.FullRankADVI()
+            approximation = pymc3.fit(n=n_iterations, method=inference)
+
+            return approximation, inference
+
+    def model_(self, features: np.ndarray, output: np.ndarray) -> pymc3.Model:
+        """
+
+        :param features:  The features tensor, including the bias cells
         :param output:  During a training step, this is the tensor of expected outputs
         :return:
         """
@@ -33,24 +53,23 @@ class Neural:
             hidden_1 = 12
             hidden_2 = 8
 
-            init_1 = self.rng.standard_normal(size=(input.shape[1], hidden_1)).astype(theano.config.floatX)
+            init_1 = self.rng.standard_normal(size=(features.shape[1], hidden_1)).astype(theano.config.floatX)
             init_2 = self.rng.standard_normal(size=(hidden_1, hidden_2)).astype(theano.config.floatX)
             init_out = self.rng.standard_normal(size=(hidden_2, output.shape[1])).astype(theano.config.floatX)
 
-            # Input & Output
-            ann_input = pymc3.Data('ann_input', input)
+            # features & Output
+            ann_input = pymc3.Data('ann_input', features)
             ann_output = pymc3.Data('ann_output', output)
 
             # Weights from input to hidden layer
-            weights_in_1 = pymc3.Normal(name='w_in_1', mu=0, sigma=1.5, shape=(input.shape[1], hidden_1),
+            weights_in_1 = pymc3.StudentT(name='w_in_1', nu=9, mu=0, sigma=1.5, shape=(features.shape[1], hidden_1),
                                           testval=init_1)
 
             # Weights from 1st to 2nd layer
-            weights_1_2 = pymc3.Normal(name='w_1_2', mu=0, sigma=1.5, shape=(hidden_1, hidden_2),
-                                         testval=init_2)
+            weights_1_2 = pymc3.StudentT(name='w_1_2', nu=7, mu=0, sigma=1.5, shape=(hidden_1, hidden_2), testval=init_2)
 
             # Weights from hidden layer to output
-            weights_2_out = pymc3.Normal(name='w_2_out', mu=0, sigma=1.5, shape=(hidden_2, output.shape[1]),
+            weights_2_out = pymc3.StudentT(name='w_2_out', nu=5, mu=0, sigma=1.5, shape=(hidden_2, output.shape[1]),
                                            testval=init_out)
 
             # Build neural-network using tanh activation function

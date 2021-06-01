@@ -99,7 +99,7 @@ class Development:
 
         training_sampled = self.sample_()
         self.logger.warning('\n1. The training data shape after SVNSMOTE sampling: {}'.format(training_sampled.shape))
-        self.logger.warning('\nFrequencies:\n{]'.format(training_sampled['class'].value_counts()))
+        self.logger.warning('\nFrequencies:\n{}'.format(training_sampled['class'].value_counts()))
 
         training_scaled, scaler = self.scale_(training_sampled=training_sampled)
         self.logger.warning('\n2. The training data shape after scaling: {}'.format(training_scaled.shape))
