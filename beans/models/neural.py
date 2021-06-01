@@ -9,18 +9,24 @@ class Neural:
 
     def __init__(self):
         """
-
+        Constructor
         """
 
         configurations = config.Config()
-
         self.rng = np.random.default_rng(seed=configurations.SEED)
-        self.n_iterations = 60000
 
-    def inference(self, model: pymc3.Model):
+    @staticmethod
+    def inference(model: pymc3.Model, n_iterations: int):
+        """
+
+        :param model:
+        :param n_iterations:
+        :return:
+        """
+
         with model:
             inference = pymc3.FullRankADVI()
-            approximation = pymc3.fit(n=self.n_iterations, method=inference)
+            approximation = pymc3.fit(n=n_iterations, method=inference)
 
             return approximation
 
