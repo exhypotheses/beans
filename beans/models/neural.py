@@ -19,7 +19,7 @@ class Neural:
 
         configurations = config.Config()
         self.rng = np.random.default_rng(seed=configurations.SEED)
-        
+
     @staticmethod
     def inference_(model: pymc3.Model, n_iterations: int):
         """
