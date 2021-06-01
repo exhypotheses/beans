@@ -12,12 +12,14 @@ class Neural:
     def __init__(self):
         """
         Constructor
+
+        Options:
+            * pymc3.theanof.set_tt_rng(pymc3.theanof.MRG_RandomStreams(seed=configurations.SEED))
         """
 
         configurations = config.Config()
         self.rng = np.random.default_rng(seed=configurations.SEED)
-        pymc3.theanof.set_tt_rng(pymc3.theanof.MRG_RandomStreams(seed=configurations.SEED))
-
+        
     @staticmethod
     def inference_(model: pymc3.Model, n_iterations: int):
         """
