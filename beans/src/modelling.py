@@ -8,20 +8,20 @@ import sklearn.utils
 # noinspection PyUnresolvedReferences,PyProtectedMember
 class Modelling:
 
-    def __init__(self):
+    def __init__(self, basename: str):
         """
         Constructor
         """
 
+        self.basename = basename
         self.target = 'class'
-        self.labels = ['BOMBAY', 'DERMASON', 'SEKER']
 
-    def attributes(self):
+    def attributes(self) -> collections.namedtuple:
 
         InstancesAttributes = collections.namedtuple(
             typename='InstancesAttributes', field_names=['url', 'usecols', 'dtype', 'target'])
 
-        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/excerpt.csv'
+        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/{}'.format(self.basename)
 
         usecols = ['area', 'perimeter', 'majoraxislength', 'minoraxislength', 'aspectratio', 'eccentricity',
                    'convexarea', 'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1',
@@ -35,19 +35,20 @@ class Modelling:
 
         return InstancesAttributes._make((url, usecols, dtype, self.target))
 
-    def __weights(self, blob: pd.DataFrame):
+    def __weights(self, blob: pd.DataFrame, labels: list) -> dict:
         """
 
         :param blob:
+        :param labels:
         :return:
         """
 
         weight_values = sklearn.utils.class_weight.compute_class_weight(
-            class_weight='balanced', classes=self.labels, y=blob[self.target])
+            class_weight='balanced', classes=labels, y=blob[self.target])
 
-        return dict(zip(self.labels, weight_values))
+        return dict(zip(labels, weight_values))
 
-    def data(self):
+    def data(self) -> (pd.DataFrame, dict, list):
         """
 
         :return: The data set, data weights w.r.t. instances per label
@@ -61,6 +62,8 @@ class Modelling:
         except OSError as err:
             raise Exception(err.strerror) in err
 
-        weights_ = self.__weights(blob=data_)
+        labels = data_[self.target].unique()
 
-        return data_, weights_
+        weights_ = self.__weights(blob=data_, labels=labels)
+
+        return data_, weights_, labels
