@@ -8,10 +8,12 @@ import sklearn.utils
 # noinspection PyUnresolvedReferences,PyProtectedMember
 class Modelling:
 
-    def __init__(self):
+    def __init__(self, basename: str):
         """
         Constructor
         """
+
+        self.basename = basename
 
         self.target = 'class'
         self.labels = ['BOMBAY', 'DERMASON', 'SEKER']
@@ -21,7 +23,7 @@ class Modelling:
         InstancesAttributes = collections.namedtuple(
             typename='InstancesAttributes', field_names=['url', 'usecols', 'dtype', 'target'])
 
-        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/excerpt.csv'
+        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/{}'.format(self.basename)
 
         usecols = ['area', 'perimeter', 'majoraxislength', 'minoraxislength', 'aspectratio', 'eccentricity',
                    'convexarea', 'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1',
