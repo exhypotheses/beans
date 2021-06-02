@@ -30,8 +30,8 @@ class Neural:
         """
 
         with model:
-            inference = pymc3.FullRankADVI()
-            approximation = pymc3.fit(n=n_iterations, method=inference)
+            inference = pymc3.ADVI()
+            approximation = pymc3.fit(n=n_iterations, method=inference, **{'obj_n_mc': 1000})
 
             return approximation, inference
 
