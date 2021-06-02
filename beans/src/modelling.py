@@ -12,7 +12,7 @@ class Modelling:
         """
         Constructor
         """
-        
+
         self.basename = basename
         self.target = 'class'
 
@@ -62,7 +62,7 @@ class Modelling:
         except OSError as err:
             raise Exception(err.strerror) in err
 
-        labels = blob[self.target].unique()
+        labels = data_[self.target].unique()
 
         weights_ = self.__weights(blob=data_, labels=labels)
 
