@@ -1,6 +1,7 @@
 <br>
 
-This repository is focused on the [Dry Beans Data](http://archive.ics.uci.edu/ml/datasets/Dry+Bean+Dataset) of Murat Koklu & Ilker AliOzkan 
+This repository is focused on the [Dry Beans Data](http://archive.ics.uci.edu/ml/datasets/Dry+Bean+Dataset) of Murat 
+Koklu & Ilker AliOzkan .  A selection of the beans will be used to explore audit options.
 
 References:
 * _Murat Koklu, Ilker Ali Ozkan: Multiclass classification of dry beans using computer vision and machine learning techniques, Computers and Electronics in Agriculture, 
