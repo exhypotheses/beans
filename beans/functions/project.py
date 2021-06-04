@@ -39,7 +39,7 @@ class Project:
         :return:
         """
 
-        projector = sklearn.decomposition.KernelPCA(kernel='sigmoid', random_state=self.SEED,  n_components=n_components)
+        projector = sklearn.decomposition.KernelPCA(kernel='cosine', random_state=self.SEED,  n_components=n_components)
         projector.fit(X=matrix)
 
         return projector
