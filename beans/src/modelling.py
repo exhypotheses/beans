@@ -21,7 +21,7 @@ class Modelling:
         InstancesAttributes = collections.namedtuple(
             typename='InstancesAttributes', field_names=['url', 'usecols', 'dtype', 'target'])
 
-        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/modelling.csv'
+        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/baseline.csv'
 
         usecols = ['area', 'perimeter', 'majoraxislength', 'minoraxislength', 'aspectratio', 'eccentricity',
                    'convexarea', 'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1',
