@@ -23,6 +23,7 @@ class Neural:
     @staticmethod
     def inference_(model: pymc3.Model, n_iterations: int):
         """
+        The pymc3.fit( ) **kwargs options are of format -> **{'obj_n_mc': 1000, ...}
 
         :param model:
         :param n_iterations:
@@ -31,7 +32,7 @@ class Neural:
 
         with model:
             inference = pymc3.ADVI()
-            approximation = pymc3.fit(n=n_iterations, method=inference, **{'obj_n_mc': 1000})
+            approximation = pymc3.fit(n=n_iterations, method=inference)
 
             return approximation, inference
 
