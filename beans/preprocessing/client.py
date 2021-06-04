@@ -11,25 +11,26 @@ class Client:
         """
         self.target = target
 
-    def scale_(self, testing_split: pd.DataFrame, scaler: sklearn.preprocessing.StandardScaler):
+    def scale_(self, blob: pd.DataFrame, scaler: sklearn.preprocessing.StandardScaler):
         """
         Scales the sampled data
 
-        :param testing_split:  The sampled data
+        :param blob:  The sampled data
+        :param scaler:  The scale transform object
         :return:
         """
 
         scale = beans.functions.scale.Scale()
-        x_testing_scaled = scale.apply(blob=testing_split.drop(columns=self.target), scaler=scaler)
-        testing_scaled = pd.concat((x_testing_scaled, testing_split[self.target]), axis=1, ignore_index=False)
+        x_scaled = scale.apply(blob=blob.drop(columns=self.target), scaler=scaler)
+        scaled = pd.concat((x_scaled, blob[self.target]), axis=1, ignore_index=False)
 
-        return testing_scaled, scaler
+        return scaled
 
-    def encode_(self, testing_scaled: pd.DataFrame):
+    def encode_(self, blob: pd.DataFrame):
         """
-        One-hot-encodes the depedent variable
+        One-hot-encodes the dependent variable
 
-        :param testing_scaled: In general, this will be the DataFrame w.r.t. the final preprocessing step before
+        :param blob: In general, this will be the DataFrame w.r.t. the final preprocessing step before
         structuring
         :return:
         """
