@@ -8,20 +8,20 @@ import sklearn.utils
 # noinspection PyUnresolvedReferences,PyProtectedMember
 class Modelling:
 
-    def __init__(self, basename: str):
+    def __init__(self):
         """
         Constructor
         """
 
-        self.basename = basename
         self.target = 'class'
+        self.labels = ['BARBUNYA', 'BOMBAY', 'CALI', 'DERMASON', 'HOROZ', 'SEKER', 'SIRA']
 
     def attributes(self) -> collections.namedtuple:
 
         InstancesAttributes = collections.namedtuple(
             typename='InstancesAttributes', field_names=['url', 'usecols', 'dtype', 'target'])
 
-        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/{}'.format(self.basename)
+        url = 'https://raw.githubusercontent.com/exhypotheses/beans/develop/warehouse/data/baseline.csv'
 
         usecols = ['area', 'perimeter', 'majoraxislength', 'minoraxislength', 'aspectratio', 'eccentricity',
                    'convexarea', 'equivdiameter', 'extent', 'solidity', 'roundness', 'compactness', 'shapefactor1',
@@ -35,18 +35,17 @@ class Modelling:
 
         return InstancesAttributes._make((url, usecols, dtype, self.target))
 
-    def __weights(self, blob: pd.DataFrame, labels: list) -> dict:
+    def __weights(self, blob: pd.DataFrame) -> dict:
         """
 
         :param blob:
-        :param labels:
         :return:
         """
 
         weight_values = sklearn.utils.class_weight.compute_class_weight(
-            class_weight='balanced', classes=labels, y=blob[self.target])
+            class_weight='balanced', classes=self.labels, y=blob[self.target])
 
-        return dict(zip(labels, weight_values))
+        return dict(zip(self.labels, weight_values))
 
     def data(self) -> (pd.DataFrame, dict, list):
         """
@@ -62,8 +61,6 @@ class Modelling:
         except OSError as err:
             raise Exception(err.strerror) in err
 
-        labels = data_[self.target].unique()
+        weights_ = self.__weights(blob=data_)
 
-        weights_ = self.__weights(blob=data_, labels=labels)
-
-        return data_, weights_, labels
+        return data_, weights_
