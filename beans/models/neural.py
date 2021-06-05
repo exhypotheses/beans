@@ -23,6 +23,7 @@ class Neural:
     @staticmethod
     def inference_(model: pymc3.Model, n_iterations: int):
         """
+        The pymc3.fit( ) **kwargs options are of format -> **{'obj_n_mc': 1000, ...}
 
         :param model:
         :param n_iterations:
@@ -30,8 +31,8 @@ class Neural:
         """
 
         with model:
-            inference = pymc3.ADVI()
-            approximation = pymc3.fit(n=n_iterations, method=inference, **{'obj_n_mc': 1000})
+            inference = pymc3.FullRankADVI()
+            approximation = pymc3.fit(n=n_iterations, method=inference)
 
             return approximation, inference
 
@@ -62,11 +63,11 @@ class Neural:
             ann_output = pymc3.Data('ann_output', output)
 
             # Weights from input to hidden layer
-            weights_in_1 = pymc3.Normal(name='w_in_1', mu=0, sigma=2.5, shape=(features.shape[1], hidden_1),
+            weights_in_1 = pymc3.StudentT(name='w_in_1', nu=5, mu=0, sigma=2.5, shape=(features.shape[1], hidden_1),
                                           testval=init_1)
 
             # Weights from 1st to 2nd layer
-            weights_1_2 = pymc3.Normal(name='w_1_2', mu=0, sigma=2.5, shape=(hidden_1, hidden_2), testval=init_2)
+            weights_1_2 = pymc3.StudentT(name='w_1_2', nu=5, mu=0, sigma=2.5, shape=(hidden_1, hidden_2), testval=init_2)
 
             # Weights from hidden layer to output
             weights_2_out = pymc3.StudentT(name='w_2_out', nu=5, mu=0, sigma=1.5, shape=(hidden_2, output.shape[1]),
