@@ -1,7 +1,7 @@
 <br>
 
 This repository is focused on the [Dry Beans Data](http://archive.ics.uci.edu/ml/datasets/Dry+Bean+Dataset) of Murat 
-Koklu & Ilker AliOzkan .  A selection of the beans will be used to explore audit options.
+Koklu & Ilker Ali Ozkan .  A selection of the beans will be used to explore audit options.
 
 <br>
 
