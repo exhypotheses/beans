@@ -70,7 +70,7 @@ class Neural:
             weights_1_2 = pymc3.StudentT(name='w_1_2', nu=5, mu=0, sigma=2.5, shape=(hidden_1, hidden_2), testval=init_2)
 
             # Weights from hidden layer to output
-            weights_2_out = pymc3.StudentT(name='w_2_out', nu=5, mu=0, sigma=1.5, shape=(hidden_2, output.shape[1]),
+            weights_2_out = pymc3.Normal(name='w_2_out', mu=0, sigma=1.5, shape=(hidden_2, output.shape[1]),
                                            testval=init_out)
 
             # Build neural-network using tanh activation function
