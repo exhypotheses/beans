@@ -2,7 +2,7 @@ import pandas as pd
 import sklearn.cluster
 import yellowbrick.cluster
 
-import beans.graphics.relational
+import beans.graphing.relational
 
 import config
 
@@ -17,7 +17,7 @@ class Knee:
         configurations = config.Config()
         self.SEED = configurations.SEED
 
-        self.relational = beans.graphics.relational.Relational()
+        self.relational = beans.graphing.relational.Relational()
 
     def exc(self, blob: pd.DataFrame, target: str) -> int:
         """
