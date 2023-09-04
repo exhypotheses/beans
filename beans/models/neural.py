@@ -39,7 +39,7 @@ class Neural:
     def model_(self, features: np.ndarray, output: np.ndarray) -> pymc3.Model:
         """
 
-        :param features:  The features tensor, including the bias cells
+        :param features:  The feature's tensor, including the bias cells
         :param output:  During a training step, this is the tensor of expected outputs
         :return:
         """
