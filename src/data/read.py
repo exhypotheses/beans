@@ -28,11 +28,11 @@ class Read:
             'Class': 'class'}
 
         self.__dtype = {
-            'Area': np.int, 'Perimeter': np.float, 'MajorAxisLength': np.float, 
-            'MinorAxisLength': np.float, 'AspectRation': np.float, 'Eccentricity': np.float, 
-            'ConvexArea': np.int, 'EquivDiameter': np.float, 'Extent': np.float, 'Solidity': np.float,
-            'roundness': np.float, 'Compactness': np.float, 'ShapeFactor1': np.float, 
-            'ShapeFactor2': np.float, 'ShapeFactor3': np.float, 'ShapeFactor4': np.float, 'Class': str}
+            'Area': int, 'Perimeter': np.float64, 'MajorAxisLength': np.float64, 
+            'MinorAxisLength': np.float64, 'AspectRation': np.float64, 'Eccentricity': np.float64, 
+            'ConvexArea': int, 'EquivDiameter': np.float64, 'Extent': np.float64, 'Solidity': np.float64,
+            'roundness': np.float64, 'Compactness': np.float64, 'ShapeFactor1': np.float64, 
+            'ShapeFactor2': np.float64, 'ShapeFactor3': np.float64, 'ShapeFactor4': np.float64, 'Class': str}
 
     def __read(self) -> pd.DataFrame:
         """
