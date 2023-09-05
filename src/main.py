@@ -3,9 +3,27 @@ The main module for running other classes
 """
 import logging
 import os
+import shutil
 import sys
+import pathlib
 
 import jax
+
+
+def __extraneous():
+    """
+    
+    :return:
+    """
+
+    for path in pathlib.Path.cwd().rglob('__pycache__'):
+        if path.is_dir():
+            try:
+                shutil.rmtree(path)
+            except PermissionError as err:
+                raise (err) from err
+
+            logger.info('Deleted: %s', path)
 
 
 def main():
@@ -24,6 +42,9 @@ def main():
     data = src.data.read.Read().exc()
     data.info()
     logger.info(data.head())
+
+    # Clean-up
+    __extraneous()
 
 
 if __name__ == '__main__':
