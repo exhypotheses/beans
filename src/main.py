@@ -42,6 +42,7 @@ def main():
     data = src.data.read.Read().exc()
     data.info()
     logger.info(data.head())
+    logger.info(data['class'].unique())
 
     # Clean-up
     __extraneous()
