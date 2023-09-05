@@ -1,0 +1,27 @@
+name: uncertainty
+channels:
+  - conda-forge
+dependencies:
+  - python==3.11.*
+  - pymc>=5.7.*
+  - pip
+  - pip:
+    - --find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+    - "jax[cuda12_pip]" 
+    - jaxlib
+    - numpyro
+    - blackjax
+    - jupyterlab 
+  - arviz 
+  - dask
+  - scikit-learn
+  - numpy>=1.25.*
+  - pandas>=2.0.*
+  - scipy>=1.11.*
+  - pyyaml
+  - requests
+  - pytest
+  - coverage
+  - pylint
+  - pytest-cov
+  - flake8
