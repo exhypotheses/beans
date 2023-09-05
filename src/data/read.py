@@ -43,7 +43,7 @@ class Read:
         return src.functions.streams.Streams().read(
             uri=self.__uri, header=0, usecols=self.__dtype.keys(), dtype=self.__dtype)
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
         """
         
         :return:
@@ -51,3 +51,5 @@ class Read:
 
         data = self.__read()
         data.rename(columns=self.__rename, inplace=True)
+
+        return data
