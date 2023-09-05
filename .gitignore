@@ -132,5 +132,5 @@ dmypy.json
 # R
 .Rhistory
 
-
-
+# Visual Studio Code
+.vscode
