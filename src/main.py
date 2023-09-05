@@ -16,7 +16,7 @@ def main():
     :return: None
     """
 
-    # Notes
+    # Notes: The NVIDIA graphics processing unit (GPU) is successfully identified
     logger.info('JAX')
     logger.info(jax.devices(backend='gpu'))
     logger.info(f"The number of GPU devices: {jax.device_count(backend='gpu')}")
