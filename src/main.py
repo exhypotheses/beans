@@ -39,10 +39,9 @@ def main():
 
 
     # The data
-    data = src.data.read.Read().exc()
-    data.info()
-    logger.info(data.head())
-    logger.info(data['class'].unique())
+    initial = src.data.initial.Read().exc()
+    initial.info()
+    logger.info(initial.head())
 
     # Clean-up
     __extraneous()
@@ -64,6 +63,6 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
 
     # Classes
-    import src.data.read
+    import src.data.initial
 
     main()
