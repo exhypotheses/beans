@@ -6,38 +6,42 @@ import sklearn.preprocessing
 
 
 class Scale:
+    """
+    Scale: Scales field values.
+    """
 
-    def __init__(self):
+    def __init__(self, blob: pd.DataFrame):
         """
-        Constructor
         
+        :param blob: A frame of numeric fields     
         """
 
-    @staticmethod
-    def apply(blob: pd.DataFrame, scaler: sklearn.preprocessing.StandardScaler) -> pd.DataFrame:
+        self.__blob = blob
+
+        # The outputs
+        self.scaler = self.__scaler()
+        self.scaled = self.__scale()
+
+    def __scale(self) -> pd.DataFrame:
         """
         Use scaler to scale the numerical data, subsequently reconstruct the data
 
-        :param blob:
-        :param scaler:
         :return:
         """        
 
         # Scaling numerical fields
-        scaled_: np.ndarray = scaler.transform(X=blob)
+        scaled_: np.ndarray = self.scaler.transform(X=self.__blob)
 
-        return pd.DataFrame(data=scaled_, columns=blob.columns)
+        return pd.DataFrame(data=scaled_, columns=self.__blob.columns)
 
-    @staticmethod
-    def exc(blob: pd.DataFrame) -> sklearn.preprocessing.StandardScaler:
+    def __scaler(self) -> sklearn.preprocessing.StandardScaler:
         """
         
-        :param blob: A frame of numeric fields
         :return:
         """
 
         # Scaling
         scaler = sklearn.preprocessing.StandardScaler(with_mean=True)
-        scaler.fit(X=blob.values)
+        scaler.fit(X=self.__blob.values)
 
         return scaler
