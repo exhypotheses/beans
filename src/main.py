@@ -44,7 +44,7 @@ def main():
     logger.info(initial.head())
 
     # Steps: In progress
-    src.interface.Interface().exc()
+    src.interface.Interface().exc(blob=initial)
 
     # Clean-up
     __extraneous()
