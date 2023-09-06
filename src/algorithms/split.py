@@ -1,35 +1,37 @@
+"""Splits the beans data set into training & testing parts"""
 import pandas as pd
-import collections
 
 import sklearn.model_selection
 
+import config
+
 
 class Split:
+    """
+    Split
+    """
 
-    def __init__(self, splitting: collections.namedtuple):
+    def __init__(self):
+        """
+        Constructor
         """
 
-        :param splitting: A collection of named parameters, and their values, for
-                         the sklearn.model_selection.train_test_split() function
+        self.__configurations = config.Config()
+
+    def exc(self, data: pd.DataFrame, train_size: float) -> (pd.DataFrame, pd.DataFrame):
         """
 
-        self.splitting = splitting
-
-    def exc(self, data: pd.DataFrame, target: list, strata: list) -> (pd.DataFrame, pd.DataFrame):
-        """
-
-        :param data:
-        :param target:
-        :param strata:
+        :param data: The beans data
+        :param train_size: The decimal fraction of the data for training
         :return:
         """
 
         x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(
-            data.drop(columns=target),
-            data[target],
-            test_size=self.splitting.test_size,
-            random_state=self.splitting.random_state,
-            stratify=data[strata])
+            data.drop(columns=self.__configurations.dependent),
+            data[self.__configurations.dependent],
+            train_size=train_size,
+            random_state=self.__configurations.seed,
+            stratify=data[self.__configurations.dependent])
 
         training = pd.concat((x_train.reset_index(drop=True), y_train.reset_index(drop=True)), axis=1,
                              ignore_index=False)
