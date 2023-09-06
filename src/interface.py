@@ -1,4 +1,5 @@
 """This module will run through the modelling steps"""
+import logging
 import pandas as pd
 
 import src.algorithms.split
@@ -17,6 +18,12 @@ class Interface:
 
         self.__train_size = train_size
 
+        # Logging
+        logging.basicConfig(level=logging.INFO,
+                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
+                            datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger = logging.getLogger(__name__)
+
     def __split(self, blob: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
 
         return src.algorithms.split.Split().exc(
@@ -31,4 +38,5 @@ class Interface:
         # Step ...
         training, testing = self.__split(blob=blob.copy())
 
-        return training, testing
+        self.__logger.info('%s', training.info())
+        self.__logger.info('%s', testing.info())
