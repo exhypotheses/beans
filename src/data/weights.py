@@ -2,6 +2,8 @@
 import sklearn
 import pandas as pd
 
+import config
+
 
 class Weights:
     """
@@ -9,30 +11,34 @@ class Weights:
     """
 
     def __init__(self) -> None:
-        pass
+        """
+        Constructor
+        """
 
-    def __weights(self, blob: pd.DataFrame, target: str) -> dict:
+        # The dependent variable field
+        self.__dependent = config.Config().dependent
+
+    def __weights(self, blob: pd.DataFrame) -> dict:
         """
 
         :param blob:
         :return:
         """
 
-        labels = blob.copy()[target].unique()
+        labels = blob.copy()[self.__dependent].unique()
 
         values = sklearn.utils.class_weight.compute_class_weight(
-            class_weight='balanced', classes=labels, y=blob.copy()[target])
+            class_weight='balanced', classes=labels, y=blob.copy()[self.__dependent])
 
         return dict(labels, values)
 
-    def exc(self, blob: pd.DataFrame, target: str) -> dict:
+    def exc(self, blob: pd.DataFrame) -> dict:
         """
         
         :param blob: The data set
-        :param target: The dependent variable field
         :return:
         """
 
-        weights = self.__weights(blob=blob, target=target)
+        weights = self.__weights(blob=blob)
 
         return weights
