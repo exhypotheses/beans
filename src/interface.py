@@ -40,3 +40,6 @@ class Interface:
 
         self.__logger.info('%s', training.info())
         self.__logger.info('%s', testing.info())
+
+        self.__logger.info(training['class'].value_counts() / training.shape[0])
+        self.__logger.info(msg=testing['class'].value_counts() / testing.shape[0])
