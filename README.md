@@ -82,3 +82,24 @@ And
   logger.warning('The # of Kernel Principal Components of interest will be {}'.format(n_components))
   logger.warning(training_projected.info())
 ```
+
+<br>
+<br>
+
+
+### References
+
+* [imbalanced learn (imblearn)](https://imbalanced-learn.org/stable/index.html)
+  * [SVMSMOTE](https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SVMSMOTE.html)
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
