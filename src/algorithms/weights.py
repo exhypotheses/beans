@@ -16,7 +16,7 @@ class Weights:
         """
 
         # The dependent variable field
-        self.__dependent = config.Config().dependent
+        self.__meta = config.Config().meta
 
     def __weights(self, blob: pd.DataFrame) -> dict:
         """
@@ -25,10 +25,10 @@ class Weights:
         :return:
         """
 
-        labels = blob.copy()[self.__dependent].unique()
+        labels = blob.copy()[self.__meta.dependent].unique()
 
         values = sklearn.utils.class_weight.compute_class_weight(
-            class_weight='balanced', classes=labels, y=blob.copy()[self.__dependent])
+            class_weight='balanced', classes=labels, y=blob.copy()[self.__meta.dependent])
 
         return dict(labels, values)
 
