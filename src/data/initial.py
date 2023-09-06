@@ -1,6 +1,4 @@
 """For beans data reading ..."""
-import os
-
 import pandas as pd
 
 import config
@@ -17,9 +15,8 @@ class Read:
         Constructor
         """
 
-        self.__uri: str = os.path.join(os.getcwd(), 'data', 'beans.csv')
-
         configurations = config.Config()
+        self.__uri: str = configurations.uri
         self.__rename: dict[str, str] = configurations.rename
         self.__dtype = configurations.dtype
 
