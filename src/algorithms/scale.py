@@ -1,3 +1,5 @@
+"""This module scales the numeric, ratio, independent variables of beans; all the 
+independent variables are numeric/ratio  """
 import numpy as np
 import pandas as pd
 import sklearn.preprocessing
