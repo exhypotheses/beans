@@ -1,19 +1,22 @@
+"""The global definitions"""
 import os
 
 
-# noinspection PyUnresolvedReferences,PyProtectedMember
 class Config:
+    """
+    Config
+    """
 
     def __init__(self):
         """
-        self.root = os.path.abspath(__package__)
-
-
+        Constructor
         """
 
-        self.numeric = ['area', 'perimeter', 'majoraxislength', 'minoraxislength',  'aspectratio', 'eccentricity', 'convexarea', 'equivdiameter', 'extent',  'solidity', 'roundness',
-                        'compactness', 'shapefactor1', 'shapefactor2', 'shapefactor3', 'shapefactor4', 'class']
+        # The storage directory for all outputs
+        self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
 
-        self.warehouse = os.path.join(os.getcwd(), 'warehouse')
+        # The seed number for all algorithms
+        self.seed: int = 5
 
-        self.SEED = 5
+        # The name of the dependent variable field
+        self.dependent: str = 'class'
