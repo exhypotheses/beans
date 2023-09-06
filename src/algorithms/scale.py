@@ -10,41 +10,30 @@ class Scale:
     Scale: Scales field values.
     """
 
-    def __init__(self, blob: pd.DataFrame, numeric: list):
+    def __init__(self, numeric: list):
         """
         
-        :param blob: A frame of ...
-        :param numeric: The numeric fields ...
-        :return:
-            scaler: The numeric fields scaler
-            scaled: The transformed <blob> data frame, wherein the numeric fields have been rescaled
+        
+        :param numeric: The numeric fields ...        
         """
 
-        self.__data = blob[numeric]
+        self.__numeric = numeric
 
-        # The numeric fields scaler
-        self.scaler = self.__scaler()
-
-        # Hence, the frame of scaled numeric fields
-        __frame = self.__scale()
-
-        # Finally, the transformed <blob> data frame, wherein the numeric fields have been rescaled
-        self.scaled = pd.concat((blob.copy().drop(columns=numeric), __frame),
-                                axis=1, ignore_index=False)
-
-    def __scale(self) -> pd.DataFrame:
+    def __scale(self, data: pd.DataFrame, scaler: sklearn.preprocessing.StandardScaler) -> pd.DataFrame:
         """
-        Use scaler to scale the numerical data, subsequently reconstruct the data
+        Uses scaler to scale the numerical data
 
+        :param data: The frame of numeric fields
+        :param scaler: The transformer
         :return:
         """
 
         # Scaling numerical fields
-        scaled_: np.ndarray = self.scaler.transform(X=self.__data)
+        scaled_: np.ndarray = scaler.transform(X=data)
 
-        return pd.DataFrame(data=scaled_, columns=self.__data.columns)
+        return pd.DataFrame(data=scaled_, columns=data.columns)
 
-    def __scaler(self) -> sklearn.preprocessing.StandardScaler:
+    def __scaler(self, data: pd.DataFrame) -> sklearn.preprocessing.StandardScaler:
         """
         
         :return:
@@ -52,11 +41,33 @@ class Scale:
 
         # Scaling
         scaler = sklearn.preprocessing.StandardScaler(with_mean=True)
-        scaler.fit(X=self.__data.values)
+        scaler.fit(X=data.values)
 
         return scaler
 
-    def exc(self):
+    def exc(self, blob: pd.DataFrame, scaler: sklearn.preprocessing.StandardScaler = None) -> (
+            pd.DataFrame, sklearn.preprocessing.StandardScaler):
         """
-        Free
+        :param blob: A frame of ...
+        :return:
+            scaled: The transformed <blob> data frame, wherein the numeric 
+                    fields have been rescaled
+            scaler: The numeric fields scaler
         """
+
+        # The numeric fields scaler
+        data = blob[self.__numeric]
+
+        # Scaler
+        if scaler is None:
+            scaler = self.__scaler(data=data.copy())
+
+        # Hence, the frame of scaled numeric fields
+        __frame = self.__scale(data=data.copy(), scaler=scaler)
+
+        # Finally, the transformed <blob> data frame, wherein the each numeric field
+        # is the rescaled numeric field.
+        scaled = pd.concat((blob.copy().drop(columns=self.__numeric), __frame), 
+                           axis=1, ignore_index=False)
+
+        return scaled, scaler
