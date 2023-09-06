@@ -1,12 +1,12 @@
 """This module will run through the modelling steps"""
 import logging
+
 import pandas as pd
 import sklearn.preprocessing
 
-import src.algorithms.split
-import src.algorithms.scale
-
 import config
+import src.algorithms.scale
+import src.algorithms.split
 import src.structures
 
 
