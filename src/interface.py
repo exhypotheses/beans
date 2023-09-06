@@ -2,7 +2,7 @@
 import logging
 
 import pandas as pd
-import sklearn.preprocessing
+import sklearn.preprocessing as skp
 
 import config
 import src.algorithms.scale
@@ -38,11 +38,13 @@ class Interface:
         return src.algorithms.split.Split().exc(
             data=blob, train_size=self.__configurations.train_size)
 
-    def __scale(self, blob: pd.DataFrame) -> (sklearn.preprocessing.StandardScaler, pd.DataFrame):
+    def __scale(self, blob: pd.DataFrame, scaler: skp.StandardScaler = None) -> (pd.DataFrame, skp.StandardScaler):
 
-        objects = src.algorithms.scale.Scale(blob=blob, numeric=self.__meta.numeric)
+        scaled: pd.DataFrame
+        scaler: skp.StandardScaler
+        scaled, scaler  = src.algorithms.scale.Scale(numeric=self.__meta.numeric).exc(blob=blob, scaler=None)
 
-        return objects.scaler, objects.scaled
+        return scaled, scaler
 
     def exc(self, blob: pd.DataFrame):
         """
@@ -54,11 +56,11 @@ class Interface:
         train, test = self.__split(blob=blob.copy())
 
         # Training
-        scaler, scaled = self.__scale(blob=train)
+        scaled, scaler = self.__scale(blob=train)
         training = self.Training(data=train, scaler=scaler, scaled=scaled)
 
         # Testing
-        testing = self.Testing(data=test, scaled=None)
+        testing = self.Testing(data=test, scaled=self.__scale(blob=test, scaler=scaler))
 
         self.__logger.info('%s', training.data.info())
         self.__logger.info('%s', testing.data.info())
