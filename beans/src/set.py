@@ -50,7 +50,7 @@ class Set:
             data_ = pd.read_csv(filepath_or_buffer=attributes.url_training, header=0, usecols=attributes.usecols,
                                 dtype=attributes.dtype, encoding='utf-8')
         except OSError as err:
-            raise Exception(err.strerror) in err
+            raise (err) from err
 
         return data_
 
@@ -66,6 +66,6 @@ class Set:
             data_ = pd.read_csv(filepath_or_buffer=attributes.url_testing, header=0, usecols=attributes.usecols,
                                 dtype=attributes.dtype, encoding='utf-8')
         except OSError as err:
-            raise Exception(err.strerror) in err
+            raise (err) from err
 
         return data_
