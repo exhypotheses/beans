@@ -1,8 +1,12 @@
 """This module will run through the modelling steps"""
 import logging
 import pandas as pd
+import sklearn.preprocessing
 
 import src.algorithms.split
+import src.algorithms.scale
+
+import config
 
 
 class Interface:
@@ -10,13 +14,12 @@ class Interface:
     Interface
     """
 
-    def __init__(self, train_size: float = 0.735) -> None:
+    def __init__(self) -> None:
         """
-        
-        :param train_size: The decimal fraction for training
+        Constructor
         """
 
-        self.__train_size = train_size
+        self.__configurations = config.Config()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -27,7 +30,13 @@ class Interface:
     def __split(self, blob: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
 
         return src.algorithms.split.Split().exc(
-            data=blob, train_size=self.__train_size)
+            data=blob, train_size=self.__configurations.train_size)
+
+    def __scale(self, blob: pd.DataFrame) -> (sklearn.preprocessing.StandardScaler, pd.DataFrame):
+
+        objects = src.algorithms.scale.Scale(blob=blob, numeric=self.__configurations.numeric)
+
+        return objects.scaler, objects.scaled
 
     def exc(self, blob: pd.DataFrame):
         """
@@ -37,6 +46,7 @@ class Interface:
 
         # Step ...
         training, testing = self.__split(blob=blob.copy())
+        self.__scale(blob=training)
 
         self.__logger.info('%s', training.info())
         self.__logger.info('%s', testing.info())
