@@ -20,6 +20,7 @@ class Interface:
         """
 
         self.__configurations = config.Config()
+        self.__meta = self.__configurations.meta
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -34,7 +35,7 @@ class Interface:
 
     def __scale(self, blob: pd.DataFrame) -> (sklearn.preprocessing.StandardScaler, pd.DataFrame):
 
-        objects = src.algorithms.scale.Scale(blob=blob, numeric=self.__configurations.numeric)
+        objects = src.algorithms.scale.Scale(blob=blob, numeric=self.__meta.numeric)
 
         return objects.scaler, objects.scaled
 
