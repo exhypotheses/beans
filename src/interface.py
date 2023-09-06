@@ -7,12 +7,17 @@ import src.algorithms.split
 import src.algorithms.scale
 
 import config
+import src.structures
 
 
 class Interface:
     """
     Interface
     """
+
+    # Structures
+    Training = src.structures.Structures().Training
+    Testing = src.structures.Structures().Testing
 
     def __init__(self) -> None:
         """
@@ -46,11 +51,17 @@ class Interface:
         """
 
         # Step ...
-        training, testing = self.__split(blob=blob.copy())
-        self.__scale(blob=training)
+        train, test = self.__split(blob=blob.copy())
 
-        self.__logger.info('%s', training.info())
-        self.__logger.info('%s', testing.info())
+        # Training
+        scaler, scaled = self.__scale(blob=train)
+        training = self.Training(data=train, scaler=scaler, scaled=scaled)
 
-        self.__logger.info(training['class'].value_counts() / training.shape[0])
-        self.__logger.info(msg=testing['class'].value_counts() / testing.shape[0])
+        # Testing
+        testing = self.Testing(data=test, scaled=None)
+
+        self.__logger.info('%s', training.data.info())
+        self.__logger.info('%s', testing.data.info())
+
+        self.__logger.info(training.data['class'].value_counts() / training.data.shape[0])
+        self.__logger.info(msg=testing.data['class'].value_counts() / testing.data.shape[0])
