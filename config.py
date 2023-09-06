@@ -19,6 +19,9 @@ class Config:
         # The seed number for all algorithms
         self.seed: int = 5
 
+        # The beans data
+        self.uri: str = os.path.join(os.getcwd(), 'data', 'beans.csv')
+
         # The original field names, and their data types
         self.dtype = {
             'Area': int, 'Perimeter': np.float64, 'MajorAxisLength': np.float64, 
@@ -28,7 +31,7 @@ class Config:
             'ShapeFactor2': np.float64, 'ShapeFactor3': np.float64, 'ShapeFactor4': np.float64, 'Class': str}
 
         # Renaming ...
-        self.rename = {
+        self.rename: dict[str, str] = {
             'Area': 'area', 'Perimeter': 'perimeter', 'MajorAxisLength': 'major_axis_length', 
             'MinorAxisLength': 'minor_axis_length', 'AspectRation': 'aspect_ratio', 'Eccentricity': 'eccentricity', 
             'ConvexArea': 'convex_area', 'EquivDiameter': 'equiv_diameter', 'Extent': 'extent', 'Solidity': 'solidity',
