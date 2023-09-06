@@ -19,6 +19,9 @@ class Config:
         # The seed number for all algorithms
         self.seed: int = 5
 
+        # Training fraction
+        self.train_size = 0.735
+
         # The beans data
         self.uri: str = os.path.join(os.getcwd(), 'data', 'beans.csv')
 
