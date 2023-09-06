@@ -15,10 +15,7 @@ class Read:
         Constructor
         """
 
-        configurations = config.Config()
-        self.__uri: str = configurations.uri
-        self.__rename: dict[str, str] = configurations.rename
-        self.__dtype = configurations.dtype
+        self.__meta = config.Config().meta
 
     def __read(self) -> pd.DataFrame:
         """
@@ -27,7 +24,7 @@ class Read:
         """
 
         return src.functions.streams.Streams().read(
-            uri=self.__uri, header=0, usecols=self.__dtype.keys(), dtype=self.__dtype)
+            uri=self.__meta.uri, header=0, usecols=self.__meta.dtype.keys(), dtype=self.__meta.dtype)
 
     def exc(self) -> pd.DataFrame:
         """
@@ -36,6 +33,6 @@ class Read:
         """
 
         data: pd.DataFrame = self.__read()
-        data.rename(columns=self.__rename, inplace=True)
+        data.rename(columns=self.__meta.rename, inplace=True)
 
         return data
