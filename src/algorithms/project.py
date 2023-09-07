@@ -31,12 +31,10 @@ class Project:
         """
 
         principals = projector.transform(X=matrix)
-        print('Principals ...')
-        print(principals)
-        names = ['kpc_' + str(i).zfill(2) for i in range(1, 1 + principals.shape[1])]
-        print(pd.DataFrame(data=principals, columns=names))
 
-        return pd.concat((pd.DataFrame(data=principals, columns=names), outcomes), axis=1, ignore_index=True)
+        names = ['kpc_' + str(i).zfill(2) for i in range(1, 1 + principals.shape[1])]
+        
+        return pd.concat((pd.DataFrame(data=principals, columns=names), outcomes), axis=1)
 
     def __projector(self, matrix: np.ndarray,  n_components: int = None) -> skd.KernelPCA:
         """
@@ -77,6 +75,5 @@ class Project:
 
         # Projecting
         projected: pd.DataFrame = self.__project(matrix=matrix, outcomes=outcomes, projector=projector)
-        print(projected)
 
         return projected, projector
