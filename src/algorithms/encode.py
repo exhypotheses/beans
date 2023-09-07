@@ -15,7 +15,7 @@ class Encode:
         """
 
         # Logging
-        logging.basicConfig(level=logging.INFO,
+        logging.basicConfig(level=logging.WARNING,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
@@ -39,6 +39,6 @@ class Encode:
         data = pd.concat((blob.copy().drop(columns=field), conditions), 
                          axis=1, ignore_index=False)
 
-        self.__logger.info('%s', data.info())
+        self.__logger.warning('%s', data.info())
 
         return data
