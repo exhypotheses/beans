@@ -57,16 +57,13 @@ class Interface:
         train, test = self.__split(blob=blob.copy())
 
         # Training
-        scaled, scaler = self.__scale(blob=train)
-        training = self.Training(data=train, scaler=scaler, scaled=scaled)
+        scaled, scaler = self.__scale(blob=train)        
+        training = self.Training(data=train, scaler=scaler, scaled=scaled, encoded=None)
+        encoded = src.algorithms.encode.Encode().exc(blob=training.data)
+        training._replace(encoded=encoded)
 
         # Testing
         testing = self.Testing(data=test, scaled=self.__scale(blob=test, scaler=scaler))
 
-        src.algorithms.encode.Encode().exc(blob=training.data)
-
-        self.__logger.info('%s', training.data.info())
-        self.__logger.info('%s', testing.data.info())
-
-        self.__logger.info(training.data['class'].value_counts() / training.data.shape[0])
-        self.__logger.info(msg=testing.data['class'].value_counts() / testing.data.shape[0])
+        self.__logger.info(training.encoded.head())
+        self.__logger.info(testing._fields)
