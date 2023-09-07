@@ -3,27 +3,10 @@ The main module for running other classes
 """
 import logging
 import os
-import shutil
 import sys
-import pathlib
 
 import jax
 
-
-def __extraneous():
-    """
-    
-    :return:
-    """
-
-    for path in pathlib.Path.cwd().rglob('__pycache__'):
-        if path.is_dir():
-            try:
-                shutil.rmtree(path)
-            except PermissionError as err:
-                raise (err) from err
-
-            logger.info('Deleted: %s', path)
 
 
 def main():
@@ -43,11 +26,14 @@ def main():
     initial.info()
     logger.info(initial.head())
 
+    # Step ...
+    train, test = src.algorithms.split.Split().exc(data=initial, train_size=config.Config().train_size)
+
     # Steps: In progress
-    src.interface.Interface().exc(blob=initial)
+    src.interface.Interface().exc(train=train)
 
     # Clean-up
-    __extraneous()
+    
 
 
 if __name__ == '__main__':
@@ -68,5 +54,8 @@ if __name__ == '__main__':
     # Classes ...
     import src.data.initial
     import src.interface
+    import src.algorithms.split
+
+    import config
 
     main()
