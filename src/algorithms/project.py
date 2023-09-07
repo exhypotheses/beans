@@ -32,7 +32,8 @@ class Project:
 
         principals = projector.transform(X=matrix)
 
-        names = ['kpc_' + str(i).zfill(2) for i in range(1, 1 + principals.shape[1])]
+        names = ['kpc_' + str(i).zfill(2) 
+                 for i in range(1, 1 + principals.shape[1])]
 
         return pd.concat((pd.DataFrame(data=principals, columns=names), outcomes), axis=1)
 
