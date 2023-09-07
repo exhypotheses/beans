@@ -26,14 +26,16 @@ def main():
     initial.info()
     logger.info(initial.head())
 
-    # Step ...
+    # The training & testing splits
     train, test = src.algorithms.split.Split().exc(data=initial, train_size=config.Config().train_size)
 
-    # Steps: In progress
+    # Modelling: In progress
     src.interface.Interface().exc(train=train)
 
+    # Predicting
+    test.info()
+
     # Clean-up
-    
 
 
 if __name__ == '__main__':
