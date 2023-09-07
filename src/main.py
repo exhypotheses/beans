@@ -34,6 +34,7 @@ def main():
 
     # Predicting
     test.info()
+    logger.info(test.head())
 
     # Clean-up
 
