@@ -15,7 +15,7 @@ class Extraneous:
         """
 
         # Logging
-        logging.basicConfig(level=logging.INFO,
+        logging.basicConfig(level=logging.WARNING,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
@@ -33,4 +33,4 @@ class Extraneous:
                 except PermissionError as err:
                     raise (err) from err
 
-                self.__logger.info('Deleted: %s', path)
+                self.__logger.warning('Deleted: %s', path)
