@@ -37,6 +37,7 @@ def main():
     logger.info(test.head())
 
     # Clean-up
+    src.functions.extraneous.Extraneous().extraneous()
 
 
 if __name__ == '__main__':
@@ -55,10 +56,11 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
 
     # Classes ...
-    import src.data.initial
-    import src.interface
     import src.algorithms.split
-
+    import src.data.initial
+    import src.functions.extraneous
+    import src.interface
+    
     import config
 
     main()
