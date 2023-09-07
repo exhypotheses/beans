@@ -20,13 +20,12 @@ def main():
     logger.info(jax.devices(backend='gpu'))
     logger.info('The number of GPU devices: %s', jax.device_count(backend='gpu'))
 
-
     # The data
     initial = src.data.initial.Read().exc()
     initial.info()
     logger.info(initial.head())
 
-    # The training & testing splits
+    # The training & testing splits: persist later
     train, test = src.algorithms.split.Split().exc(data=initial, train_size=config.Config().train_size)
 
     # Modelling: In progress
