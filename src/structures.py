@@ -8,7 +8,9 @@ class Structures:
     """
 
     Training = collections.namedtuple(
-        typename='Training', field_names=['data', 'scaler', 'scaled', 'encoded'], defaults=[None, None, None, None])
+        typename='Training',
+        field_names=['data', 'scaler', 'scaled', 'encoded', 'projected'],
+        defaults=[None, None, None, None, None])
 
     Testing = collections.namedtuple(
         typename='Testing', field_names=['data', 'scaled'])
