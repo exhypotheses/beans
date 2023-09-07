@@ -62,4 +62,4 @@ class Interface:
         encoded = src.algorithms.encode.Encode().exc(blob=training.projected, field=self.__meta.dependent)
         training = training._replace(encoded=encoded)
 
-        self.__logger.info('\n\nEncoded ... \n%s', training.encoded.info())
+        self.__logger.info('%s', training.encoded.info())
