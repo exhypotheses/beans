@@ -23,7 +23,6 @@ def main():
     # The data
     initial = src.data.initial.Read().exc()
     initial.info()
-    logger.info(initial.head())
 
     # The training & testing splits: persist later
     train, test = src.algorithms.split.Split().exc(data=initial, train_size=config.Config().train_size)
@@ -33,8 +32,6 @@ def main():
 
     # Predicting
     test.info()
-    logger.info('\n\nTest ...')
-    logger.info(test.head())
 
     # Clean-up
     src.functions.extraneous.Extraneous().extraneous()
