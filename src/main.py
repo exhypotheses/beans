@@ -33,6 +33,7 @@ def main():
 
     # Predicting
     test.info()
+    logger.info('\n\nTest ...')
     logger.info(test.head())
 
     # Clean-up
