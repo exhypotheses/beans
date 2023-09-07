@@ -1,7 +1,9 @@
-import numpy as np
+"""For one-hot and ordinal encoding"""
+import logging
+
 import pandas as pd
-import collections
-import sklearn.preprocessing
+
+import config
 
 
 class Encode:
@@ -14,20 +16,32 @@ class Encode:
         Constructor
         """
 
-    @staticmethod
-    def bits(frame: pd.DataFrame, categories: collections.namedtuple) -> pd.DataFrame:
+        self.__meta = config.Config().meta
+
+        # Logging
+        logging.basicConfig(level=logging.INFO,
+                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
+                            datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger = logging.getLogger(__name__)
+
+    def exc(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
         For One Hot Encoding
 
-        :param frame: A DataFrame of data
-        :param categories: A collection consisting of 2 items.  Item 1 -> categorical fields, Item 2 -> The unique
-                                      values of each field
+        :param blob: A DataFrame of data
         :return:
         """
 
-        enc = sklearn.preprocessing.OneHotEncoder(categories=categories.arrays, sparse=False, dtype=np.int)
-        bits_ = enc.fit_transform(X=frame[categories.fields])
+        # Get the one-hot-encodes of the dependent variable field
+        conditions = pd.get_dummies(blob.copy()[self.__meta.dependent])
 
-        columns = [column[(column.rindex('_') + 1):] for column in enc.get_feature_names()]
+        # Values {0, 1} instead of {False, True}
+        conditions = conditions.copy().astype(dtype=int)
 
-        return pd.DataFrame(data=bits_, columns=columns)
+        # Reconstruct the data
+        data = pd.concat((blob.copy().drop(columns=self.__meta.dependent), conditions), 
+                         axis=1, ignore_index=False)
+
+        self.__logger.info('%s', data.info())
+
+        return data
