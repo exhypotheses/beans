@@ -8,7 +8,6 @@ import sys
 import jax
 
 
-
 def main():
     """
     Entry point
@@ -22,7 +21,7 @@ def main():
 
     # The data
     initial = src.data.initial.Read().exc()
-    initial.info()
+    logger.info('\n\nInitial ... \n%s', initial.info())
 
     # The training & testing splits: persist later
     train, test = src.algorithms.split.Split().exc(data=initial, train_size=config.Config().train_size)
@@ -31,7 +30,7 @@ def main():
     src.interface.Interface().exc(train=train)
 
     # Predicting
-    test.info()
+    logger.info('\n\nTest ... \n%s', test.info())
 
     # Clean-up
     src.functions.extraneous.Extraneous().extraneous()
@@ -57,7 +56,7 @@ if __name__ == '__main__':
     import src.data.initial
     import src.functions.extraneous
     import src.interface
-    
+
     import config
 
     main()
