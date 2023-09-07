@@ -36,9 +36,9 @@ class Encode:
         conditions = conditions.copy().astype(dtype=int)
 
         # Reconstruct the data
-        data = pd.concat((blob.copy().drop(columns=field), conditions), 
-                         axis=1, ignore_index=False)
-
-        self.__logger.warning('%s', data.info())
+        try:
+            data = pd.concat((blob.copy().drop(columns=field), conditions), axis=1, ignore_index=False)
+        except RuntimeError as err:
+            raise (self.__logger.warning(err)) from err
 
         return data
