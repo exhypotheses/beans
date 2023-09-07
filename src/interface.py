@@ -50,15 +50,16 @@ class Interface:
 
         # Scaling
         scaled, scaler = self.__scale(blob=train)
-        training = self.Training(data=train, scaler=scaler, scaled=scaled, encoded=None, projected=None)
+        training = self.Training(data=train, scaler=scaler, scaled=scaled, projector=None, projected=None, encoded=None)
 
         # Number of components
 
         # Projecting independent variables
-        projected = src.algorithms.project.Project().exc(blob=training.scaled, exclude=[self.__meta.dependent])
-        training._replace(projected=projected)
+        projected, projector = src.algorithms.project.Project().exc(blob=training.scaled, exclude=[self.__meta.dependent])
+        training._replace(projected=projected, projector=projector)
 
         # Encoding the dependent variable
+        self.__logger.info(training.projected.head())
         encoded = src.algorithms.encode.Encode().exc(blob=training.projected, field=self.__meta.dependent)
         training._replace(encoded=encoded)
 
