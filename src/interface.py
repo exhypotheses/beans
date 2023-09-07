@@ -6,7 +6,6 @@ import sklearn.preprocessing as skp
 
 import config
 import src.algorithms.scale
-import src.algorithms.split
 import src.algorithms.encode
 import src.structures
 
@@ -34,11 +33,6 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __split(self, blob: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
-
-        return src.algorithms.split.Split().exc(
-            data=blob, train_size=self.__configurations.train_size)
-
     def __scale(self, blob: pd.DataFrame, scaler: skp.StandardScaler = None) -> (pd.DataFrame, skp.StandardScaler):
 
         scaled: pd.DataFrame
@@ -47,23 +41,20 @@ class Interface:
 
         return scaled, scaler
 
-    def exc(self, blob: pd.DataFrame):
+    def exc(self, train: pd.DataFrame):
         """
         
-        :param blob: The beans data
+        :param train: The beans data
         """
 
-        # Step ...
-        train, test = self.__split(blob=blob.copy())
-
-        # Training
+        # Scaling
         scaled, scaler = self.__scale(blob=train)
         training = self.Training(data=train, scaler=scaler, scaled=scaled, encoded=None)
+
+        # Encoding
         encoded = src.algorithms.encode.Encode().exc(blob=training.data)
         training._replace(encoded=encoded)
 
-        # Testing
-        testing = self.Testing(data=test, scaled=self.__scale(blob=test, scaler=scaler))
+        # Projecting
 
         self.__logger.info(training.encoded.head())
-        self.__logger.info(testing._fields)
