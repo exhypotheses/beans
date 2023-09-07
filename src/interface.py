@@ -7,6 +7,7 @@ import sklearn.preprocessing as skp
 import config
 import src.algorithms.scale
 import src.algorithms.split
+import src.algorithms.encode
 import src.structures
 
 
@@ -61,6 +62,8 @@ class Interface:
 
         # Testing
         testing = self.Testing(data=test, scaled=self.__scale(blob=test, scaler=scaler))
+
+        src.algorithms.encode.Encode().exc(blob=training.data)
 
         self.__logger.info('%s', training.data.info())
         self.__logger.info('%s', testing.data.info())
