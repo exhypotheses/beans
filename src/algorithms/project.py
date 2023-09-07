@@ -31,7 +31,10 @@ class Project:
         """
 
         principals = projector.transform(X=matrix)
+        print('Principals ...')
+        print(principals)
         names = ['kpc_' + str(i).zfill(2) for i in range(1, 1 + principals.shape[1])]
+        print(pd.DataFrame(data=principals, columns=names))
 
         return pd.concat((pd.DataFrame(data=principals, columns=names), outcomes), axis=1, ignore_index=True)
 
@@ -55,10 +58,12 @@ class Project:
         :param exclude: The list of fields to exclude from the projection step
         :param n_components: The number of components of interest
         :return:
+            projected
+            projector
         """
 
         # The matrix that will be decomposed
-        matrix: np.ndarray = blob.copy().drop(columns=exclude).array
+        matrix: np.ndarray = blob.copy().drop(columns=exclude).to_numpy()
 
         # The parallel dependent variable vector, as a series
         if exclude is None:
@@ -72,5 +77,6 @@ class Project:
 
         # Projecting
         projected: pd.DataFrame = self.__project(matrix=matrix, outcomes=outcomes, projector=projector)
+        print(projected)
 
         return projected, projector
