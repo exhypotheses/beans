@@ -7,6 +7,7 @@ import sklearn.preprocessing as skp
 import config
 import src.algorithms.scale
 import src.algorithms.encode
+import src.algorithms.project
 import src.structures
 
 
@@ -49,12 +50,16 @@ class Interface:
 
         # Scaling
         scaled, scaler = self.__scale(blob=train)
-        training = self.Training(data=train, scaler=scaler, scaled=scaled, encoded=None)
+        training = self.Training(data=train, scaler=scaler, scaled=scaled, encoded=None, projected=None)
 
-        # Encoding
-        encoded = src.algorithms.encode.Encode().exc(blob=training.data)
+        # Number of components
+
+        # Projecting independent variables
+        projected = src.algorithms.project.Project().exc(blob=training.scaled, exclude=[self.__meta.dependent])
+        training._replace(projected=projected)
+
+        # Encoding the dependent variable
+        encoded = src.algorithms.encode.Encode().exc(blob=training.projected, field=self.__meta.dependent)
         training._replace(encoded=encoded)
-
-        # Projecting
 
         self.__logger.info(training.encoded.head())
