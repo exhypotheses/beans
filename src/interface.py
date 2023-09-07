@@ -57,7 +57,7 @@ class Interface:
         train, test = self.__split(blob=blob.copy())
 
         # Training
-        scaled, scaler = self.__scale(blob=train)        
+        scaled, scaler = self.__scale(blob=train)
         training = self.Training(data=train, scaler=scaler, scaled=scaled, encoded=None)
         encoded = src.algorithms.encode.Encode().exc(blob=training.data)
         training._replace(encoded=encoded)
