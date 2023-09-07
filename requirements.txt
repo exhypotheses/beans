@@ -11,6 +11,7 @@ scikit-learn
 numpy>=1.25.*
 pandas>=2.0.*
 scipy>=1.11.*
+matplotlib
 yellowbrick
 pyyaml
 requests>=2.31.*
