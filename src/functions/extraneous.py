@@ -31,6 +31,4 @@ class Extraneous:
                 try:
                     shutil.rmtree(path)
                 except PermissionError as err:
-                    raise (err) from err
-
-                self.__logger.warning('Deleted: %s', path)
+                    raise (self.__logger.warning(err)) from err
