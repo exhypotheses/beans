@@ -5,6 +5,7 @@ jaxlib
 numpyro
 blackjax
 jupyterlab>=4.0.*
+yellowbrick
 arviz
 python-graphviz
 "dask[complete]"
@@ -14,8 +15,6 @@ pandas>=2.0.*
 scipy>=1.11.*
 matplotlib
 seaborn
-yellowbrick
-pylibtiff
 pyyaml
 requests>=2.31.*
 pytest>=7.4.*
