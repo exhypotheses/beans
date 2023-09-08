@@ -15,6 +15,7 @@ scipy>=1.11.*
 matplotlib
 seaborn
 yellowbrick
+pylibtiff
 pyyaml
 requests>=2.31.*
 pytest>=7.4.*
