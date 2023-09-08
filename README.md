@@ -8,6 +8,9 @@ Koklu & Ilker Ali Ozkan .  A selection of the beans will be used to explore audi
 References:
 * _Murat Koklu, Ilker Ali Ozkan: Multiclass classification of dry beans using computer vision and machine learning techniques, Computers and Electronics in Agriculture, 
   Volume 174, 2020, 105507_, [DOI](https://doi.org/10.1016/j.compag.2020.105507)
+* [The details of the original dataset](http://archive.ics.uci.edu/ml/datasets/Dry+Bean+Dataset)
+* [The original zip file](http://archive.ics.uci.edu/ml/machine-learning-databases/00602/DryBeanDataset.zip)
+* [The developer's copy of this original zip file](https://github.com/thirdreading/hub/blob/master/data/beans/beans.zip)
 
 <br>
 <br>
