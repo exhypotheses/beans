@@ -6,6 +6,7 @@ numpyro
 blackjax
 jupyterlab>=4.0.*
 arviz
+python-graphviz
 "dask[complete]"
 scikit-learn
 numpy>=1.25.*
