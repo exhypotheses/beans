@@ -46,15 +46,14 @@ class Neural:
         """
 
         # Architecture
-        n_hidden_1 = 6
-        n_hidden_2 = 5
+        n_hidden_layer_1 = 6
+        n_hidden_layer_2 = 5
 
-        init_1 = self.rng.standard_normal(size=(features.shape[1], n_hidden_1)).astype(pytensor.config.floatX)
-        init_2 = self.rng.standard_normal(size=(n_hidden_1, n_hidden_2)).astype(pytensor.config.floatX)
-        init_out = self.rng.standard_normal(size=(n_hidden_2, output.shape[1])).astype(pytensor.config.floatX)
+        init_1 = self.rng.standard_normal(size=(features.shape[1], n_hidden_layer_1)).astype(pytensor.config.floatX)
+        init_2 = self.rng.standard_normal(size=(n_hidden_layer_1, n_hidden_layer_2)).astype(pytensor.config.floatX)
+        init_out = self.rng.standard_normal(size=(n_hidden_layer_2, output.shape[1])).astype(pytensor.config.floatX)
 
         # Coordinates
-
 
         # Model
         with pymc.Model() as network:          
@@ -64,14 +63,14 @@ class Neural:
             ann_output = pymc.Data('ann_output', output)
 
             # Weights from input to hidden layer
-            weights_in_1 = pymc.StudentT(name='w_in_1', nu=5, mu=0, sigma=2.5, shape=(features.shape[1], n_hidden_1),
+            weights_in_1 = pymc.StudentT(name='w_in_1', nu=5, mu=0, sigma=2.5, shape=(features.shape[1], n_hidden_layer_1),
                                           testval=init_1)
 
             # Weights from 1st to 2nd layer
-            weights_1_2 = pymc.StudentT(name='w_1_2', nu=5, mu=0, sigma=2.5, shape=(n_hidden_1, n_hidden_2), testval=init_2)
+            weights_1_2 = pymc.StudentT(name='w_1_2', nu=5, mu=0, sigma=2.5, shape=(n_hidden_layer_1, n_hidden_layer_2), testval=init_2)
 
             # Weights from hidden layer to output
-            weights_2_out = pymc.Normal(name='w_2_out', mu=0, sigma=1.5, shape=(n_hidden_2, output.shape[1]),
+            weights_2_out = pymc.Normal(name='w_2_out', mu=0, sigma=1.5, shape=(n_hidden_layer_2, output.shape[1]),
                                            testval=init_out)
 
             # Build neural-network using tanh activation function
