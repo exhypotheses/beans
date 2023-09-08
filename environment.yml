@@ -12,7 +12,8 @@ dependencies:
     - numpyro
     - blackjax
     - jupyterlab 
-  - arviz 
+  - arviz
+  - python-graphviz
   - dask
   - scikit-learn
   - numpy>=1.25.*
