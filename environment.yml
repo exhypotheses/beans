@@ -11,7 +11,8 @@ dependencies:
     - jaxlib
     - numpyro
     - blackjax
-    - jupyterlab 
+    - jupyterlab
+    - yellowbrick
   - arviz
   - python-graphviz
   - dask
@@ -21,8 +22,6 @@ dependencies:
   - scipy>=1.11.*
   - matplotlib
   - seaborn
-  - yellowbrick
-  - pylibtiff
   - pyyaml
   - requests
   - pytest
