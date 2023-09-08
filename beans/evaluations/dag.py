@@ -1,9 +1,8 @@
 """Module dag"""
-
 import os
 
 import graphviz
-import pymc3
+import pymc
 
 import config
 
@@ -22,7 +21,7 @@ class DAG:
         configurations = config.Config()
         self.warehouse = configurations.warehouse
 
-    def exc(self, model: pymc3.Model):
+    def exc(self, model: pymc.Model):
         """
 
         :param model:
@@ -30,7 +29,7 @@ class DAG:
         """
 
         # The DAG
-        diagram = pymc3.model_graph.ModelGraph(model=model).make_graph()
+        diagram = pymc.model_graph.ModelGraph(model=model).make_graph()
         diagram.node_attr.update(shape='circle')
         diagram.graph_attr.update(size="11.3,11.9")
 
