@@ -8,6 +8,7 @@ import config
 import src.algorithms.scale
 import src.algorithms.encode
 import src.algorithms.project
+import src.algorithms.knee
 import src.structures
 
 
@@ -53,6 +54,8 @@ class Interface:
         training = self.Training(data=train, scaler=scaler, scaled=scaled, projector=None, projected=None, encoded=None)
 
         # Number of components
+        n_components = src.algorithms.knee.Knee().exc(blob=training.scaled)
+        self.__logger.info('Plausible # of component: %s', n_components)
 
         # Projecting independent variables
         projected, projector = src.algorithms.project.Project().exc(blob=training.scaled, exclude=[self.__meta.dependent])
