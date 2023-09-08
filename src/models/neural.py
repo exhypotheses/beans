@@ -54,24 +54,32 @@ class Neural:
         init_out = self.rng.standard_normal(size=(n_hidden_layer_2, output.shape[1])).astype(pytensor.config.floatX)
 
         # Coordinates
+        coordinates = {
+            'i_hidden_layer_1': np.arange(n_hidden_layer_1),
+            'i_hidden_layer_2': np.arange(n_hidden_layer_2),
+            'i_features': np.arange(features.shape[1]),
+            'i_observations': np.arange(features.shape[0]),
+            'i_labels': np.arange(output.shape[1])
+        }
 
         # Model
-        with pymc.Model() as network:          
+        with pymc.Model(coords=coordinates) as network:
 
             # features & Output
-            ann_input = pymc.Data('ann_input', features)
-            ann_output = pymc.Data('ann_output', output)
+            ann_input = pymc.Data('ann_input', features, mutable=True, dims=('i_observations', 'i_features'))
+            ann_output = pymc.Data('ann_output', output, mutable=True, dims='i_observations')
 
-            # Weights from input to hidden layer
-            weights_in_1 = pymc.StudentT(name='w_in_1', nu=5, mu=0, sigma=2.5, shape=(features.shape[1], n_hidden_layer_1),
-                                          testval=init_1)
+            # Weights from input to first hidden layer
+            weights_in_1 = pymc.StudentT(name='w_in_1', nu=5, mu=0, sigma=2.5, 
+                                         dims=('i_features', 'i_hidden_layer_1'), initval=init_1)
 
-            # Weights from 1st to 2nd layer
-            weights_1_2 = pymc.StudentT(name='w_1_2', nu=5, mu=0, sigma=2.5, shape=(n_hidden_layer_1, n_hidden_layer_2), testval=init_2)
+            # Weights from first hidden layer -> second hidden layer
+            weights_1_2 = pymc.StudentT(name='w_1_2', nu=5, mu=0, sigma=2.5, 
+                                        dims=('i_hidden_layer_1', 'i_hidden_layer_2'), initval=init_2)
 
-            # Weights from hidden layer to output
-            weights_2_out = pymc.Normal(name='w_2_out', mu=0, sigma=1.5, shape=(n_hidden_layer_2, output.shape[1]),
-                                           testval=init_out)
+            # Weights from second hidden layer to output
+            weights_2_out = pymc.Normal(name='w_2_out', mu=0, sigma=1.5, 
+                                        dims=('i_hidden_layer_2', 'i_labels'), initval=init_out)
 
             # Build neural-network using tanh activation function
             act_1 = pymc.math.tanh(pymc.math.dot(ann_input, weights_in_1))
