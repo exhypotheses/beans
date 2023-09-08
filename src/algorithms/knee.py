@@ -19,14 +19,13 @@ class Knee:
         """
 
         self.__seed = config.Config().seed
-        self.__meta = config.Config().meta
 
         self.relational = src.graphing.relational.Relational()
 
     def exc(self, blob: pd.DataFrame) -> int:
         """
 
-        :param blob: The data set that will be sampled
+        :param blob: The data matrix, in data frame form, that will undergo dimension reduction
         :return:
         """
 
@@ -35,7 +34,7 @@ class Knee:
         # A rough estimate of the number of effective clusters that <blob> can be divided into
         kmc = sklearn.cluster.KMeans(random_state=self.__seed, max_iter=1000, algorithm='full')
         ybc = yellowbrick.cluster.KElbowVisualizer(estimator=kmc, k=(3, 16), metric='distortion', timings=False, ax=axes)
-        ybc.fit(X=blob.drop(columns=self.__meta.dependent))
+        ybc.fit(X=blob)
         axes.figure.clf()
 
         return ybc.elbow_value_
