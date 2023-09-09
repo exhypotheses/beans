@@ -41,7 +41,7 @@ class Scale:
 
         # Scaling
         scaler = sklearn.preprocessing.StandardScaler(with_mean=True)
-        scaler.fit(X=data.values)
+        scaler.fit(X=data)
 
         return scaler
 
@@ -55,7 +55,7 @@ class Scale:
             scaler: The numeric fields scaler
         """
 
-        # The numeric fields scaler
+        # The numeric fields
         data = blob[self.__numeric]
 
         # Scaler
