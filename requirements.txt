@@ -1,24 +1,15 @@
 pymc>=5.7.*
 --find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
-"jax[cuda12_pip]"
-jaxlib
+"jax[cuda11_pip]"
 numpyro
 blackjax
-jupyterlab>=4.0.*
-yellowbrick
-arviz
-python-graphviz
+graphviz
 "dask[complete]"
 scikit-learn
-numpy>=1.25.*
-pandas>=2.0.*
-scipy>=1.11.*
-matplotlib
 seaborn
-pyyaml
 requests>=2.31.*
 pytest>=7.4.*
 coverage>=7.2.7
-pytest-cov>=4.1.0
 pylint>=2.17.4
+pytest-cov>=4.1.0
 flake8>=6.0.*
