@@ -32,7 +32,7 @@ class Knee:
         axes = self.relational.figure(width=3.9, height=3.3)
 
         # A rough estimate of the number of effective clusters that <blob> can be divided into
-        kmc = sklearn.cluster.KMeans(random_state=self.__seed, max_iter=1000, algorithm='full')
+        kmc = sklearn.cluster.KMeans(random_state=self.__seed, max_iter=1000, algorithm='lloyd')
         ybc = yellowbrick.cluster.KElbowVisualizer(estimator=kmc, k=(3, blob.shape[1]), metric='distortion', timings=False, ax=axes)
         ybc.fit(X=blob)
         axes.figure.clf()
