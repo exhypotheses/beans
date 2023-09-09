@@ -58,7 +58,8 @@ class Interface:
         self.__logger.info('Plausible # of component: %s', n_components)
 
         # Projecting independent variables
-        projected, projector = src.algorithms.project.Project().exc(blob=training.scaled, exclude=[self.__meta.dependent])
+        projected, projector = src.algorithms.project.Project().exc(
+            blob=training.scaled, exclude=[self.__meta.dependent], n_components=n_components)
         training = training._replace(projected=projected, projector=projector)
 
         # Encoding the dependent variable
