@@ -1,7 +1,7 @@
 """Principal vectors knee"""
 import pandas as pd
 import sklearn.cluster
-import yellowbrick
+import yellowbrick.cluster
 
 import config
 import src.graphing.relational
