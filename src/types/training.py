@@ -8,7 +8,7 @@ import sklearn.decomposition as skd
 import sklearn.preprocessing as skp
 
 
-class Cases(typing.NamedTuple):
+class Training(typing.NamedTuple):
     """
     
     :return: Named tuple class
