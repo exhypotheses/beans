@@ -14,7 +14,7 @@ class Tensors:
         pass
 
 
-    def __single(self, blob: pd.DataFrame):
+    def __single(self, blob: pd.DataFrame) -> (np.ndarray, np.ndarray):
         """
         
         :param blob: The data frame of the neural network's input vectors
@@ -29,7 +29,7 @@ class Tensors:
 
         return x_points, None
 
-    def __doublet(self, blob: pd.DataFrame, labels: list):
+    def __doublet(self, blob: pd.DataFrame, labels: list) -> (np.ndarray, np.ndarray):
         """
         
         :param blob: The data frame of the neural network's input & output vectors
@@ -49,7 +49,7 @@ class Tensors:
         return x_points, y_points
 
 
-    def exc(self, blob: pd.DataFrame, labels: list = None):
+    def exc(self, blob: pd.DataFrame, labels: list = None) -> (np.ndarray, np.ndarray):
         """
         
 
