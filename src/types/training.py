@@ -1,5 +1,5 @@
 """
-Exploring named tuple classes
+Exploring a named tuple class for training data, and complementary objects.
 """
 import typing
 
