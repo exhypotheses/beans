@@ -31,7 +31,7 @@ class Interface:
 
         neural = src.modelling.neural.Neural()
         model = neural.model_(features=training.x_points, output=training.y_points)
-        details = neural.inference_(model=model, n_iterations=35000)
+        details = neural.inference_(model=model, n_iterations=750)
 
         return model, details
 
