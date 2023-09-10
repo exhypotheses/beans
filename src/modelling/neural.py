@@ -76,7 +76,7 @@ class Neural:
 
             # features & Output
             ann_input = pymc.Data('ann_input', features, mutable=True, dims=('i_observations', 'i_features'))
-            ann_output = pymc.Data('ann_output', output, mutable=True, dims='i_observations')
+            ann_output = pymc.Data('ann_output', output, mutable=True, dims=('i_observations', 'i_labels'))
 
             # Weights from input to first hidden layer
             weights_in_1 = pymc.StudentT(name='w_in_1', nu=5, mu=0, sigma=2.5, 
