@@ -27,7 +27,7 @@ def main():
     train, test = src.algorithms.split.Split().exc(data=initial, train_size=config.Config().train_size)
 
     # Modelling: In progress
-    src.interface.Interface().exc(train=train)
+    src.models.interface.Interface().exc(train=train)
 
     # Predicting
     test.info()
@@ -55,7 +55,7 @@ if __name__ == '__main__':
     import src.algorithms.split
     import src.data.initial
     import src.functions.extraneous
-    import src.interface
+    import src.models.interface
 
     import config
 
