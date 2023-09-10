@@ -3,6 +3,7 @@ import logging
 
 import pandas as pd
 
+import src.algorithms.tensors
 import src.modelling.preprocessing
 import src.types.training
 
@@ -32,5 +33,9 @@ class Interface:
         """
 
         training = src.modelling.preprocessing.Preprocessing().exc(train=train)
-
         self.__logger.info('%s', training.encoded.info())
+
+        x_points, y_points = src.algorithms.tensors.Tensors().exc(
+            blob=training.encoded, labels=training.labels)
+        self.__logger.info(x_points)
+        self.__logger.info(y_points)
