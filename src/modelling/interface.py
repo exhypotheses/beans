@@ -37,5 +37,5 @@ class Interface:
 
         x_points, y_points = src.algorithms.tensors.Tensors().exc(
             blob=training.encoded, labels=training.labels)
-        self.__logger.info(x_points)
-        self.__logger.info(y_points)
+        self.__logger.info(type(x_points))
+        self.__logger.info(type(y_points))
