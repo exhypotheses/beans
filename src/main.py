@@ -24,13 +24,10 @@ def main():
     initial.info()
 
     # The training & testing splits: persist later
-    train, test = src.algorithms.split.Split().exc(data=initial, train_size=config.Config().train_size)
+    train, _ = src.algorithms.split.Split().exc(data=initial, train_size=config.Config().train_size)
 
     # Modelling: In progress
     src.modelling.interface.Interface().exc(train=train)
-
-    # Predicting
-    test.info()
 
     # Clean-up
     src.functions.extraneous.Extraneous().extraneous()
