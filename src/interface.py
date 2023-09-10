@@ -9,7 +9,7 @@ import src.algorithms.scale
 import src.algorithms.encode
 import src.algorithms.project
 import src.algorithms.knee
-import src.types.cases
+import src.types.training
 
 
 class Interface:
@@ -49,20 +49,20 @@ class Interface:
         scaled: pd.DataFrame
         scaler: skp.StandardScaler
         scaled, scaler = self.__scale(blob=train)
-        cases = src.types.cases.Cases(data=train, scaler=scaler, scaled=scaled)
+        training = src.types.training.Training(data=train, scaler=scaler, scaled=scaled)
 
         # Determining the best # of projection components
-        n_components: int = src.algorithms.knee.Knee().exc(blob=cases.scaled.drop(columns=self.__meta.dependent))
+        n_components: int = src.algorithms.knee.Knee().exc(blob=training.scaled.drop(columns=self.__meta.dependent))
         self.__logger.info('Plausible # of components: %s', n_components)
 
         # Projecting the independent variables, i.e., dimensionality reduction via
         # kernel principal component analysis
         projected, projector = src.algorithms.project.Project().exc(
-            blob=cases.scaled, exclude=[self.__meta.dependent], n_components=n_components)
-        cases = cases._replace(projected=projected, projector=projector)
+            blob=training.scaled, exclude=[self.__meta.dependent], n_components=n_components)
+        training = training._replace(projected=projected, projector=projector)
 
         # Encoding the dependent variable
-        encoded, labels = src.algorithms.encode.Encode().exc(blob=cases.projected, field=self.__meta.dependent)
-        cases = cases._replace(encoded=encoded, labels=labels)
+        encoded, labels = src.algorithms.encode.Encode().exc(blob=training.projected, field=self.__meta.dependent)
+        training = training._replace(encoded=encoded, labels=labels)
 
-        self.__logger.info('%s', cases.encoded.info())
+        self.__logger.info('%s', training.encoded.info())
