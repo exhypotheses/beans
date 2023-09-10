@@ -47,7 +47,7 @@ class Interface:
         self.__logger.info('\nY: %s\n%s', training.y_points.shape, training.y_points)
 
         model, details = self.__alg(training=training)
-        
+
         # pymc.model.core.Model
         self.__logger.info(model)
 
