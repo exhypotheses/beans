@@ -2,7 +2,7 @@
 independent variables are numeric/ratio  """
 import numpy as np
 import pandas as pd
-import sklearn.preprocessing
+import sklearn.preprocessing as skp
 
 
 class Scale:
@@ -19,7 +19,7 @@ class Scale:
 
         self.__numeric = numeric
 
-    def __scale(self, data: pd.DataFrame, scaler: sklearn.preprocessing.StandardScaler) -> pd.DataFrame:
+    def __scale(self, data: pd.DataFrame, scaler: skp.StandardScaler) -> pd.DataFrame:
         """
         Uses scaler to scale the numerical data
 
@@ -33,20 +33,20 @@ class Scale:
 
         return pd.DataFrame(data=scaled_, columns=data.columns)
 
-    def __scaler(self, data: pd.DataFrame) -> sklearn.preprocessing.StandardScaler:
+    def __scaler(self, data: pd.DataFrame) -> skp.StandardScaler:
         """
         
         :return:
         """
 
         # Scaling
-        scaler = sklearn.preprocessing.StandardScaler(with_mean=True)
+        scaler = skp.StandardScaler(with_mean=True)
         scaler.fit(X=data)
 
         return scaler
 
-    def exc(self, blob: pd.DataFrame, scaler: sklearn.preprocessing.StandardScaler = None) -> (
-            pd.DataFrame, sklearn.preprocessing.StandardScaler):
+    def exc(self, blob: pd.DataFrame, scaler: skp.StandardScaler = None) -> (
+            pd.DataFrame, skp.StandardScaler):
         """
         :param blob: A frame of ...
         :return:
