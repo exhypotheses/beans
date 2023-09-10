@@ -33,5 +33,6 @@ class Interface:
         """
 
         training = src.modelling.preprocessing.Preprocessing().exc(train=train)
-        self.__logger.info('X: %s\n%s', training.x_points.shape, training.x_points)
-        self.__logger.info('Y: %s\n%s', training.y_points.shape, training.y_points)
+        self.__logger.info('Algebraic objects data:\n%s', training.encoded.head())
+        self.__logger.info('\nX: %s\n%s', training.x_points.shape, training.x_points)
+        self.__logger.info('\nY: %s\n%s', training.y_points.shape, training.y_points)
