@@ -10,6 +10,7 @@ import src.algorithms.encode
 import src.algorithms.project
 import src.algorithms.knee
 import src.types.training
+import src.algorithms.tensors
 
 
 class Preprocessing:
@@ -77,6 +78,13 @@ class Preprocessing:
 
         return training._replace(encoded=encoded, labels=labels)
 
+    def __tensors(self, training: Training) -> Training:
+
+        x_points, y_points = src.algorithms.tensors.Tensors().exc(
+            blob=training.encoded, labels=training.labels)
+
+        return training._replace(x_points=x_points, y_points=y_points)
+
     def exc(self, train: pd.DataFrame) -> Training:
         """
         
@@ -94,5 +102,8 @@ class Preprocessing:
 
         # Encoding
         training = self.__encode(training=training)
+
+        # Tensors
+        training = self.__tensors(training=training)
 
         return training
