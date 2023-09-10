@@ -58,7 +58,7 @@ class Interface:
 
         # Determining the best # of projection components
         n_components: int = src.algorithms.knee.Knee().exc(blob=training.scaled.drop(columns=self.__meta.dependent))
-        self.__logger.info('Plausible # of component: %s', n_components)
+        self.__logger.info('Plausible # of components: %s', n_components)
 
         # Projecting the independent variables, i.e., dimensionality reduction via
         # kernel principal component analysis
