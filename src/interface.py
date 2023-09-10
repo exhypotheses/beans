@@ -50,14 +50,17 @@ class Interface:
         """
 
         # Scaling
+        scaled: pd.DataFrame
+        scaler: skp.StandardScaler
         scaled, scaler = self.__scale(blob=train)
         training = self.Training(data=train, scaler=scaler, scaled=scaled, projector=None, projected=None, encoded=None)
 
-        # Number of components
-        n_components = src.algorithms.knee.Knee().exc(blob=training.scaled.drop(columns=self.__meta.dependent))
+        # Determining the best # of projection components
+        n_components: int = src.algorithms.knee.Knee().exc(blob=training.scaled.drop(columns=self.__meta.dependent))
         self.__logger.info('Plausible # of component: %s', n_components)
 
-        # Projecting independent variables
+        # Projecting the independent variables, i.e., dimensionality reduction via
+        # kernel principal component analysis
         projected, projector = src.algorithms.project.Project().exc(
             blob=training.scaled, exclude=[self.__meta.dependent], n_components=n_components)
         training = training._replace(projected=projected, projector=projector)
