@@ -42,7 +42,7 @@ class Tensors:
         x_matrix: np.ndarray = blob.drop(columns=labels).to_numpy()
         y_matrix: np.ndarray = blob[labels].to_numpy()
 
-        unity = np.ones((x_matrix.shape[0], 1))
+        unity: np.ndarray[np.float64] = np.ones((x_matrix.shape[0], 1))
         x_points: np.ndarray = np.concatenate((unity, x_matrix), axis=1).astype(pytensor.config.floatX)
         y_points: np.ndarray = y_matrix.astype(pytensor.config.floatX)
 
