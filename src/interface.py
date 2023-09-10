@@ -41,6 +41,19 @@ class Interface:
 
         return training._replace(scaler=scaler, scaled=scaled)
 
+    def __project(self, training: Training) -> Training:
+
+        # Determining the best # of projection components
+        n_components: int = src.algorithms.knee.Knee().exc(blob=training.scaled.drop(columns=self.__meta.dependent))
+        self.__logger.info('Plausible # of components: %s', n_components)
+
+        # Projecting the independent variables: dimensionality reduction via
+        # kernel principal component analysis
+        projected, projector = src.algorithms.project.Project().exc(
+            blob=training.scaled, exclude=[self.__meta.dependent], n_components=n_components)
+
+        return training._replace(projected=projected, projector=projector)
+
     def exc(self, train: pd.DataFrame):
         """
         
@@ -53,15 +66,8 @@ class Interface:
         # Scaling
         training = self.__scale(training=training)
 
-        # Determining the best # of projection components
-        n_components: int = src.algorithms.knee.Knee().exc(blob=training.scaled.drop(columns=self.__meta.dependent))
-        self.__logger.info('Plausible # of components: %s', n_components)
-
-        # Projecting the independent variables, i.e., dimensionality reduction via
-        # kernel principal component analysis
-        projected, projector = src.algorithms.project.Project().exc(
-            blob=training.scaled, exclude=[self.__meta.dependent], n_components=n_components)
-        training = training._replace(projected=projected, projector=projector)
+        # Projecting
+        training = self.__project(training=training)
 
         # Encoding the dependent variable
         encoded, labels = src.algorithms.encode.Encode().exc(blob=training.projected, field=self.__meta.dependent)
