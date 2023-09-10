@@ -17,7 +17,7 @@ def main():
     # Notes: The NVIDIA graphics processing unit (GPU) is successfully identified
     logger.info('JAX')
     logger.info(jax.devices(backend='gpu'))
-    logger.info('The number of GPU devices: %s', jax.device_count(backend='gpu'))
+    logger.info('The number of GPU devices: %s\n\n', jax.device_count(backend='gpu'))
 
     # The data
     initial = src.data.initial.Read().exc()
