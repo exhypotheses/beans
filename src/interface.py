@@ -53,8 +53,7 @@ class Interface:
         scaled: pd.DataFrame
         scaler: skp.StandardScaler
         scaled, scaler = self.__scale(blob=train)
-        training = self.Training(data=train, scaler=scaler, scaled=scaled, projector=None, projected=None,
-                                  encoded=None, labels=None)
+        training = self.Training(data=train, scaler=scaler, scaled=scaled)
 
         # Determining the best # of projection components
         n_components: int = src.algorithms.knee.Knee().exc(blob=training.scaled.drop(columns=self.__meta.dependent))
