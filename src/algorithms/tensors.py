@@ -1,7 +1,6 @@
 """Builds tensors for the neural network model"""
 import pandas as pd
 import numpy as np
-import pymc
 import pytensor
 
 
