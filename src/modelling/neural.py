@@ -1,4 +1,5 @@
 """A neural network model"""
+import collections
 import pymc
 import numpy as np
 import pytensor
@@ -19,6 +20,29 @@ class Neural:
 
         configurations = config.Config()
         self.rng = np.random.default_rng(seed=configurations.seed)
+
+    def __arc(self, d_features: np.ndarray, d_output: np.ndarray):
+
+        Arc = collections.namedtuple(
+            typename='Arc',
+            field_names=['n_hidden_layer_1', 'n_hidden_layer_2', 'init_1', 'init_2', 'init_out', 'coordinates'])
+
+        # Architecture
+        n_hidden_layer_1 = 6
+        n_hidden_layer_2 = 5
+
+        return Arc(n_hidden_layer_1=n_hidden_layer_1, n_hidden_layer_2=n_hidden_layer_2,
+                 init_1 = self.rng.standard_normal(size=(d_features[1], n_hidden_layer_1)).astype(pytensor.config.floatX),
+                 init_2 = self.rng.standard_normal(size=(n_hidden_layer_1, n_hidden_layer_2)).astype(pytensor.config.floatX),
+                 init_out = self.rng.standard_normal(size=(n_hidden_layer_2, d_output[1])).astype(pytensor.config.floatX),
+                 coordinates = {
+                     'i_hidden_layer_1': np.arange(n_hidden_layer_1),
+                     'i_hidden_layer_2': np.arange(n_hidden_layer_2),
+                     'i_features': np.arange(d_features[1]),
+                     'i_observations': np.arange(d_features[0]),
+                     'i_labels': np.arange(d_output[1])}
+        )
+
 
     @staticmethod
     def inference_(model: pymc.Model, n_iterations: int):
@@ -45,25 +69,10 @@ class Neural:
         :return:
         """
 
-        # Architecture
-        n_hidden_layer_1 = 6
-        n_hidden_layer_2 = 5
-
-        init_1 = self.rng.standard_normal(size=(features.shape[1], n_hidden_layer_1)).astype(pytensor.config.floatX)
-        init_2 = self.rng.standard_normal(size=(n_hidden_layer_1, n_hidden_layer_2)).astype(pytensor.config.floatX)
-        init_out = self.rng.standard_normal(size=(n_hidden_layer_2, output.shape[1])).astype(pytensor.config.floatX)
-
-        # Coordinates
-        coordinates = {
-            'i_hidden_layer_1': np.arange(n_hidden_layer_1),
-            'i_hidden_layer_2': np.arange(n_hidden_layer_2),
-            'i_features': np.arange(features.shape[1]),
-            'i_observations': np.arange(features.shape[0]),
-            'i_labels': np.arange(output.shape[1])
-        }
+        arc = self.__arc(d_features=features.shape, d_output=output.shape)
 
         # Model
-        with pymc.Model(coords=coordinates) as network:
+        with pymc.Model(coords=arc.coordinates) as network:
 
             # features & Output
             ann_input = pymc.Data('ann_input', features, mutable=True, dims=('i_observations', 'i_features'))
@@ -71,15 +80,15 @@ class Neural:
 
             # Weights from input to first hidden layer
             weights_in_1 = pymc.StudentT(name='w_in_1', nu=5, mu=0, sigma=2.5, 
-                                         dims=('i_features', 'i_hidden_layer_1'), initval=init_1)
+                                         dims=('i_features', 'i_hidden_layer_1'), initval=arc.init_1)
 
             # Weights from first hidden layer -> second hidden layer
             weights_1_2 = pymc.StudentT(name='w_1_2', nu=5, mu=0, sigma=2.5, 
-                                        dims=('i_hidden_layer_1', 'i_hidden_layer_2'), initval=init_2)
+                                        dims=('i_hidden_layer_1', 'i_hidden_layer_2'), initval=arc.init_2)
 
             # Weights from second hidden layer to output
             weights_2_out = pymc.Normal(name='w_2_out', mu=0, sigma=1.5, 
-                                        dims=('i_hidden_layer_2', 'i_labels'), initval=init_out)
+                                        dims=('i_hidden_layer_2', 'i_labels'), initval=arc.init_out)
 
             # Build neural-network using tanh activation function
             act_1 = pymc.math.tanh(pymc.math.dot(ann_input, weights_in_1))
