@@ -20,7 +20,7 @@ class Encode:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self, blob: pd.DataFrame, field: str) -> pd.DataFrame:
+    def exc(self, blob: pd.DataFrame, field: str) -> (pd.DataFrame, list):
         """
         For One Hot Encoding
 
@@ -41,4 +41,4 @@ class Encode:
         except RuntimeError as err:
             raise (self.__logger.warning(err)) from err
 
-        return data
+        return data, conditions.columns
