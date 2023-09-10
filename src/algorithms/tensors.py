@@ -43,8 +43,8 @@ class Tensors:
         y_matrix = blob[labels].to_numpy()
 
         unity = np.ones((x_matrix.shape[0], 1))
-        x_points = np.concatenate((unity, x_matrix), axis=1).astype(pytensor.config.floatX)
-        y_points = y_matrix.astype(pytensor.config.floatX)
+        x_points: np.ndarray = np.concatenate((unity, x_matrix), axis=1).astype(pytensor.config.floatX)
+        y_points: np.ndarray = y_matrix.astype(pytensor.config.floatX)
 
         return x_points, y_points
 
