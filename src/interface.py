@@ -66,7 +66,7 @@ class Interface:
         training = training._replace(projected=projected, projector=projector)
 
         # Encoding the dependent variable
-        encoded = src.algorithms.encode.Encode().exc(blob=training.projected, field=self.__meta.dependent)
+        encoded, labels = src.algorithms.encode.Encode().exc(blob=training.projected, field=self.__meta.dependent)
         training = training._replace(encoded=encoded)
 
         self.__logger.info('%s', training.encoded.info())
