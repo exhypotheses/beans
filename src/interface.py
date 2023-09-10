@@ -33,31 +33,54 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger: logging.Logger = logging.getLogger(__name__)
 
-    def __scale(self, training: Training, scaler: skp.StandardScaler = None) -> Training:
+    def __scale(self, training: Training) -> Training:
+        """
+        
+        :param training:
+        :return: training: Training
+        """
 
         scaled: pd.DataFrame
         scaler: skp.StandardScaler
-        scaled, scaler  = src.algorithms.scale.Scale(numeric=self.__meta.numeric).exc(blob=training.data, scaler=None)
+        scaled, scaler  = src.algorithms.scale.Scale(numeric=self.__meta.numeric).exc(blob=training.data)
 
         return training._replace(scaler=scaler, scaled=scaled)
 
     def __project(self, training: Training) -> Training:
+        """
+        For dimension reduction purposes.  It projects the independent variables 
+        via kernel principal component analysis
+        
+        :param training:
+        :return: training: Training
+        """
 
         # Determining the best # of projection components
         n_components: int = src.algorithms.knee.Knee().exc(blob=training.scaled.drop(columns=self.__meta.dependent))
         self.__logger.info('Plausible # of components: %s', n_components)
 
-        # Projecting the independent variables: dimensionality reduction via
-        # kernel principal component analysis
+        # Projecting
         projected, projector = src.algorithms.project.Project().exc(
             blob=training.scaled, exclude=[self.__meta.dependent], n_components=n_components)
 
         return training._replace(projected=projected, projector=projector)
 
+    def __encode(self, training: Training) -> Training:
+        """
+        
+        :param training:
+        :return: training: Training
+        """
+
+        encoded, labels = src.algorithms.encode.Encode().exc(
+            blob=training.projected, field=self.__meta.dependent)
+
+        return training._replace(encoded=encoded, labels=labels)
+
     def exc(self, train: pd.DataFrame):
         """
         
-        :param train: The beans data
+        :param train: The training data
         """
 
         # Setting-up
@@ -69,8 +92,7 @@ class Interface:
         # Projecting
         training = self.__project(training=training)
 
-        # Encoding the dependent variable
-        encoded, labels = src.algorithms.encode.Encode().exc(blob=training.projected, field=self.__meta.dependent)
-        training = training._replace(encoded=encoded, labels=labels)
+        # Encoding
+        training = self.__encode(training=training)
 
         self.__logger.info('%s', training.encoded.info())
