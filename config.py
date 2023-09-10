@@ -54,7 +54,7 @@ class Config:
         dependent: str = 'class'
 
         # The numeric fields
-        numeric = ['area', 'perimeter', 'major_axis_length', 'minor_axis_length', 'aspect_ratio', 'eccentricity',
+        numeric: list[str] = ['area', 'perimeter', 'major_axis_length', 'minor_axis_length', 'aspect_ratio', 'eccentricity',
                          'convex_area', 'equiv_diameter', 'extent', 'solidity', 'roundness', 'compactness', 'shape_factor_1', 
                          'shape_factor_2', 'shape_factor_3', 'shape_factor_4']
 
