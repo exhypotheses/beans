@@ -33,9 +33,5 @@ class Interface:
         """
 
         training = src.modelling.preprocessing.Preprocessing().exc(train=train)
-        self.__logger.info('%s', training.encoded.info())
-
-        x_points, y_points = src.algorithms.tensors.Tensors().exc(
-            blob=training.encoded, labels=training.labels)
-        self.__logger.info(type(x_points))
-        self.__logger.info(type(y_points))
+        self.__logger.info('X: %s\n%s', training.x_points.shape, training.x_points)
+        self.__logger.info('Y: %s\n%s', training.y_points.shape, training.y_points)
