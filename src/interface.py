@@ -17,6 +17,8 @@ class Interface:
     Interface
     """
 
+    Training = src.types.training.Training
+
     def __init__(self) -> None:
         """
         Constructor
@@ -31,13 +33,13 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger: logging.Logger = logging.getLogger(__name__)
 
-    def __scale(self, blob: pd.DataFrame, scaler: skp.StandardScaler = None) -> (pd.DataFrame, skp.StandardScaler):
+    def __scale(self, training: Training, scaler: skp.StandardScaler = None) -> Training:
 
         scaled: pd.DataFrame
         scaler: skp.StandardScaler
-        scaled, scaler  = src.algorithms.scale.Scale(numeric=self.__meta.numeric).exc(blob=blob, scaler=None)
+        scaled, scaler  = src.algorithms.scale.Scale(numeric=self.__meta.numeric).exc(blob=training.data, scaler=None)
 
-        return scaled, scaler
+        return training._replace(scaler=scaler, scaled=scaled)
 
     def exc(self, train: pd.DataFrame):
         """
@@ -45,11 +47,11 @@ class Interface:
         :param train: The beans data
         """
 
+        # Setting-up
+        training = src.types.training.Training(data=train)
+
         # Scaling
-        scaled: pd.DataFrame
-        scaler: skp.StandardScaler
-        scaled, scaler = self.__scale(blob=train)
-        training = src.types.training.Training(data=train, scaler=scaler, scaled=scaled)
+        training = self.__scale(training=training)
 
         # Determining the best # of projection components
         n_components: int = src.algorithms.knee.Knee().exc(blob=training.scaled.drop(columns=self.__meta.dependent))
