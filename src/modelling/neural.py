@@ -58,7 +58,7 @@ class Neural:
             inference = pymc.FullRankADVI()
             approximation = pymc.fit(n=n_iterations, method=inference)
 
-            return approximation, inference
+        return approximation, inference
 
     def model_(self, features: np.ndarray, output: np.ndarray) -> pymc.Model:
         """
