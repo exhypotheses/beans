@@ -52,10 +52,6 @@ class Neural:
         :return:
         """
 
-        # Next
-        # pymc.Minibatch(): https://www.pymc.io/projects/examples/en/latest/variational_inference/
-        #   bayesian_neural_network_advi.html#mini-batch-advi
-
         arc = self.__arc(d_features=features.shape, d_output=output.shape)
 
         # Model
