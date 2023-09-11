@@ -27,14 +27,6 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger: logging.Logger = logging.getLogger(__name__)
 
-    def __alg(self, training: Training):
-
-        neural = src.modelling.neural.Neural()
-        model = neural.model_(features=training.x_points, output=training.y_points)
-        details = neural.inference_(model=model, n_iterations=750)
-
-        return model, details
-
     def exc(self, train: pd.DataFrame):
         """
         
@@ -46,10 +38,8 @@ class Interface:
         self.__logger.info('\nX: %s\n%s', training.x_points.shape, training.x_points)
         self.__logger.info('\nY: %s\n%s', training.y_points.shape, training.y_points)
 
-        model, details = self.__alg(training=training)
+        neural = src.modelling.neural.Neural()
+        model = neural.model_(features=training.x_points, output=training.y_points)
 
         # pymc.model.core.Model
         self.__logger.info(model)
-
-        # (pymc.variational.approximations.FullRank, pymc.variational.inference.FullRankADVI)
-        self.__logger.info(details)
