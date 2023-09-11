@@ -50,7 +50,7 @@ Subsequently, within `vscode` settings ensure that the `Pylint: Import Strategy`
 
 <br>
 
-**Projecting the indepent variables**
+**Projecting the independent variables**
 
 Foremost, how many principal components might be effective?  A rough estimate can be determined via the elbow method, whilst being aware of the method's limitations.  Study
 
