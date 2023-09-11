@@ -8,6 +8,7 @@ graphviz
 scikit-learn
 seaborn
 requests>=2.31.*
+jupyterlab
 pytest>=7.4.*
 coverage>=7.2.7
 pylint>=2.17.4

@@ -15,6 +15,7 @@ dependencies:
     - scikit-learn
     - seaborn  
     - requests
+    - jupyterlab
     - pytest
     - coverage
     - pylint

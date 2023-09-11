@@ -5,11 +5,11 @@ import pandas as pd
 import pymc
 
 import src.algorithms.tensors
+import src.inference.sampling.blackjax
+import src.inference.variational.differentiation
 import src.modelling.neural
 import src.modelling.preprocessing
 import src.types.training
-import src.inference.sampling.blackjax
-import src.inference.variational.differentiation
 
 
 class Interface:
@@ -48,5 +48,5 @@ class Interface:
 
         # Inference
         details = src.inference.variational.differentiation.Differentiation().full_rank_advi(
-            model=model, n_iterations=750)
+            model=model, n_iterations=500)
         self.__logger.info(details)
