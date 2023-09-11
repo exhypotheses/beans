@@ -1,1 +1,0 @@
-[{"source": "baseline.csv", "numeric": ["area", "perimeter", "majoraxislength", "minoraxislength", "aspectratio", "eccentricity", "convexarea", "equivdiameter", "extent", "solidity", "roundness", "compactness", "shapefactor1", "shapefactor2", "shapefactor3", "shapefactor4"], "categorical": [], "target": "class"}]
