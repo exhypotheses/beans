@@ -55,7 +55,6 @@ In the case of dimension reduction via principal component analysis, the key con
 Whenever an algorithm has a mini-batch option, try it.  Study [Variational Inference: Bayesian Neural Network](https://www.pymc.io/projects/examples/en/latest/variational_inference/bayesian_neural_network_advi.html#mini-batch-advi) and
 
 * [pymc.Minibatch()](https://www.pymc.io/projects/docs/en/latest/api/generated/pymc.Minibatch.html)
-
 * [example](https://www.pymc.io/projects/examples/en/latest/variational_inference/variational_api_quickstart.html#minibatches)
 
 <br>
