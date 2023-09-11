@@ -7,7 +7,7 @@ import pytensor
 import config
 
 
-class Neural:
+class Snapshot:
     """
     Neural
         A Bayesian neural network model for beans classification
