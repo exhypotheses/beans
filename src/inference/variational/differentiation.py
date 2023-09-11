@@ -1,5 +1,6 @@
 """Variational Inference"""
 import pymc
+import config
 
 
 class Differentiation:
@@ -10,7 +11,11 @@ class Differentiation:
     """
 
     def __init__(self) -> None:
-        pass
+        """
+        Constructor
+        """
+
+        self.__seed = config.Config().seed
 
     def full_rank_advi(self, model: pymc.Model, n_iterations: int):
         """
@@ -23,6 +28,6 @@ class Differentiation:
 
         with model:
             inference = pymc.FullRankADVI()
-            trace = pymc.fit(n=n_iterations, method=inference)
+            trace = pymc.fit(n=n_iterations, method=inference, random_seed=self.__seed)
 
         return trace
