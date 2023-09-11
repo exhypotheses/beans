@@ -43,23 +43,6 @@ class Neural:
                      'i_labels': np.arange(d_output[1])}
         )
 
-
-    @staticmethod
-    def inference_(model: pymc.Model, n_iterations: int):
-        """
-        The pymc.fit( ) **kwargs options are of format -> **{'obj_n_mc': 1000, ...}
-
-        :param model:
-        :param n_iterations:
-        :return:
-        """
-
-        with model:
-            inference = pymc.FullRankADVI()
-            approximation = pymc.fit(n=n_iterations, method=inference)
-
-        return approximation, inference
-
     def model_(self, features: np.ndarray, output: np.ndarray) -> pymc.Model:
         """
         A neural network model consisting of an input layer, two hidden layers, and an output layer
